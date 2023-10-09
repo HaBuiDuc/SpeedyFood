@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">SpeedyFood</string>
+
+    <string name="image_des">Image des</string>
+
+    <string name="rice">Rice</string>
+    <string name="soup">Soup</string>
+    <string name="drink">Drink</string>
+    <string name="fast_food">Fast food</string>
+    <string name="snack">Snack</string>
+    <string name="all">All</string>
+    <string name="recommended_food">Recommended foods</string>
+    <string name="order_recently">Order recently</string>
+    <string name="nearby_food">Nearby food</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="total_price">Total price</string>
+    <string name="optional_items">Optional items</string>
+    <string name="toppings">Toppings</string>
+    <string name="my">My</string>
+    <string name="cart_list">Cart List</string>
+    <string name="log_in">Log in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="register">Register</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="user_name">Username</string>
+    <string name="email_or_phone">Email or phone number</string>
+    <string name="password">Password</string>
+    <string name="do_not_have_account">Don\'t have an account?</string>
+    <string name="already_have_account">Already have an account?</string>
+</resources>

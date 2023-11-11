@@ -11,7 +11,7 @@
     <string name="all">All</string>
     <string name="recommended_food">Recommended foods</string>
     <string name="order_recently">Order recently</string>
-    <string name="nearby_food">Nearby food</string>
+    <string name="all_food">All food</string>
     <string name="add_to_cart">Add to cart</string>
     <string name="total_price">Total price</string>
     <string name="optional_items">Optional items</string>
@@ -23,8 +23,13 @@
     <string name="register">Register</string>
     <string name="create_an_account">Create an account</string>
     <string name="user_name">Username</string>
-    <string name="email_or_phone">Email or phone number</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="do_not_have_account">Don\'t have an account?</string>
     <string name="already_have_account">Already have an account?</string>
+    <string name="full_name">Full name</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="phone_number">Phone number</string>
+    <string name="fill_information_guide">Let\'s fill in your information</string>
+    <string name="submit">Submit</string>
 </resources>

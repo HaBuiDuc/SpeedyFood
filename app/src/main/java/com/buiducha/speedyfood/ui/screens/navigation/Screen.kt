@@ -9,4 +9,5 @@ sealed class Screen(
     object LoginScreen: Screen("login_screen")
     object RegisterScreen: Screen("register_screen")
     object SearchScreen: Screen("search_screen")
+    object AddInfoScreen: Screen("add_info_screen")
 }

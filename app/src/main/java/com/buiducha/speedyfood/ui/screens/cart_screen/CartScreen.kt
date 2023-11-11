@@ -1,5 +1,6 @@
 package com.buiducha.speedyfood.ui.screens.cart_screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.buiducha.speedyfood.R
 import com.buiducha.speedyfood.ui.screens.home_screen.foodList
+import com.buiducha.speedyfood.ui.theme.Ivory
 import com.buiducha.speedyfood.ui.theme.TextBoldStyle
 import com.buiducha.speedyfood.ui.theme.TextNormalStyle
 
@@ -36,6 +38,7 @@ fun CartScreen() {
     ) { padding ->
         Column(
             modifier = Modifier
+                .background(Ivory)
                 .padding(padding)
         ) {
             Column(

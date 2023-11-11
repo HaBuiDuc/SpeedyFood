@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -28,19 +29,22 @@ fun TopBarButton(
                 shadowBlurRadius = 10.dp,
                 offsetY = 2.dp
             )
-            .background(
-                color = Color.White,
+            .clip(
                 shape = RoundedCornerShape(10.dp)
             )
+            .background(
+                color = Color.White,
+            )
+            .clickable {
+                onClick()
+            }
             .padding(4.dp)
+
     ) {
         Icon(
             imageVector = imageVector,
             contentDescription = null,
             modifier = Modifier
-                .clickable {
-                    onClick()
-                }
         )
     }
 }

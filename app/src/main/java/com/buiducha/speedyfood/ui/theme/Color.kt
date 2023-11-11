@@ -24,6 +24,7 @@ val DarkGreen = Color(0xFF57b667)
 val GrayBrush = Brush.linearGradient(
     listOf(Ivory, Color.White)
 )
+val MarianBlue = Color(0xFF023e8a)
 
 @Composable
 fun AuthenticTextFieldColor() = TextFieldDefaults.colors(

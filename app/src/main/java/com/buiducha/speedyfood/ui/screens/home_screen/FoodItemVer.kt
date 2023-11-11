@@ -41,7 +41,8 @@ fun FoodItemPreview() {
 @Composable
 fun FoodItemVer(
     food: FoodData,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onFoodSelect: (FoodData) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -55,27 +56,15 @@ fun FoodItemVer(
                 offsetY = 6.dp
             )
             .clip(RoundedCornerShape(16.dp))
-            .clickable {  }
+            .clickable {
+                onFoodSelect(food)
+            }
             .background(
                 brush = GrayBrush,
             )
             .padding(16.dp)
 
     ) {
-//        Image(
-//            painter = rememberImagePainter(
-//                data = food.imageUri,
-//                builder = {
-//                    crossfade(false)
-//                }
-//            ),
-//            contentDescription = stringResource(id = R.string.image_des),
-//            contentScale = ContentScale.Crop,
-//            modifier = Modifier
-//                .clip(CircleShape)
-//                .fillMaxWidth()
-//                .aspectRatio(1f)
-//        )
         GlideImage(
             model = food.imageUri,
             contentDescription = null,

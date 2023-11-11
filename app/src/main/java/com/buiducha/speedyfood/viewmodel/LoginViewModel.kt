@@ -1,39 +1,54 @@
 package com.buiducha.speedyfood.viewmodel
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.buiducha.speedyfood.MainActivity
+import com.buiducha.speedyfood.data.repository.FireBaseRepository
 
 class LoginViewModel : ViewModel() {
-    private var auth: FirebaseAuth = Firebase.auth
+    private val fireBaseRepository = FireBaseRepository.get()
 
     fun userLogin(
         activity: Activity,
         email: String,
         password: String,
+        onLoginSuccess: () -> Unit,
+        onLoginFailure: (String) -> Unit
     ) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(activity) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    user?.let {
-                        if (it.isEmailVerified) {
-                            Log.d(TAG, "login successfully")
-                        } else {
-                            Log.d(TAG, "login failure")
-                        }
-                    }
-                } else if (task.isCanceled) {
-                    Log.d(TAG, "login failure")
-                }
-            }
-            .addOnFailureListener(activity) { _ ->
-                Log.d(TAG, "login failure")
-            }
+        fireBaseRepository.userLogin(
+            activity = activity,
+            email = email,
+            password = password,
+            onLoginSuccess = onLoginSuccess,
+            onLoginFailure = onLoginFailure
+        )
     }
+
+    fun onLoginSuccess(
+        onUserExists: () -> Unit,
+        onUserNotExists: () -> Unit
+    ) {
+        fireBaseRepository.isUserInfoExists(
+            userId = fireBaseRepository.getCurrentUser()?.uid!!,
+            onUserExists = onUserExists,
+            onUserNotExists = onUserNotExists
+        )
+    }
+
+//    fun startMainActivity(context: Context) {
+//        Log.d(TAG, "startMainActivity: ")
+//        val intent = Intent(context, MainActivity::class.java)
+//        (context as Activity).finish()
+//        context.startActivity(intent)
+//    }
+
+    fun isValueValid(
+        email: String,
+        password: String,
+    ): Boolean = email.isNotEmpty() && password.isNotEmpty()
     companion object {
         const val TAG = "LoginViewModel"
     }

@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -60,6 +61,12 @@ fun CartItem(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
             .fillMaxWidth()
+            .shadow(
+                elevation = 0.5.dp,
+                shape = RoundedCornerShape(16.dp)
+            )
+            .background(Color.White)
+            .padding(16.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -80,11 +87,13 @@ fun CartItem(
                     fontSize = 18.sp
                 )
                 Spacer(modifier = Modifier.height(6.dp))
-                Text(
-                    text = "$${food.price}",
-                    style = TextSemiBoldStyle,
-                    fontSize = 18.sp
-                )
+                Row {
+                    Text(
+                        text = "$${food.price}",
+                        style = TextSemiBoldStyle,
+                        fontSize = 18.sp
+                    )
+                }
             }
         }
         ChangeQuantityButton()

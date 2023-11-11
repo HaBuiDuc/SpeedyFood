@@ -1,5 +1,7 @@
 package com.buiducha.speedyfood.ui.screens.detail_screen
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -7,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,10 +27,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,37 +38,43 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.buiducha.speedyfood.R
-import com.buiducha.speedyfood.data.model.FoodData
+import com.buiducha.speedyfood.data.model.OptionalItemData
 import com.buiducha.speedyfood.ui.theme.Gold
 import com.buiducha.speedyfood.utils.advancedShadow
+import com.buiducha.speedyfood.viewmodel.DetailViewModel
+import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-
 
 @Preview
 @Composable
 fun DetailScreenPreview() {
-    DetailScreen(
-        food = FoodData(
-            name = "Beef "
-        )
-    )
+//    DetailScreen(
+//        food = FoodData(
+//            name = "Beef "
+//        )
+//    )
 }
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun DetailScreen(
-    food: FoodData,
-    modifier: Modifier = Modifier
+    navHostController: NavHostController,
+    foodViewModel: FoodViewModel,
+    modifier: Modifier = Modifier,
+    detailViewModel: DetailViewModel = viewModel { DetailViewModel(foodViewModel) },
 ) {
-    var quantity by remember {
-        mutableIntStateOf(0)
-    }
+    val detailState by detailViewModel.detailState.collectAsState()
     val scrollState = rememberScrollState()
     Scaffold(
         bottomBar = {
-            DetailScreenBottomBar()
+            DetailScreenBottomBar(
+                totalPrice = detailState.totalPrice
+            )
         }
     ) { padding ->
         Column(
@@ -81,17 +88,21 @@ fun DetailScreen(
                     .fillMaxWidth()
             ) {
                 GlideImage(
-                    model = food.imageUri,
+                    model = detailState.food!!.imageUri,
                     contentDescription = null,
-                    contentScale = ContentScale.FillWidth,
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .aspectRatio(1.6f)
                 )
+
                 DetailScreenTopBar(
                     modifier = Modifier
                         .align(Alignment.TopStart)
                         .padding(8.dp)
-                )
+                ) {
+                    navHostController.popBackStack()
+                }
             }
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -159,14 +170,14 @@ fun DetailScreen(
                         contentDescription = null,
                         modifier = Modifier
                             .clickable {
-                                if (quantity > 0) {
-                                    quantity--
+                                if (detailState.itemQuantity > 0) {
+                                    detailViewModel.subQuantity()
                                 }
                             }
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = quantity.toString()
+                        text = detailState.itemQuantity.toString()
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Icon(
@@ -174,7 +185,7 @@ fun DetailScreen(
                         contentDescription = null,
                         modifier = Modifier
                             .clickable {
-                                quantity++
+                                detailViewModel.addQuantity()
                             }
                     )
                 }
@@ -183,13 +194,54 @@ fun DetailScreen(
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                Text(
-                    text = food.name!!,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 24.sp
-                )
+                detailState.food?.let { food ->
+                    Text(
+                        text = food.name!!,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 24.sp
+                    )
+                }
             }
-//            OptionalItems()
+//            foodViewModel.foodData.value?.let { foodData ->
+//
+//                val toppingList = mutableListOf<OptionalItemData>()
+//                foodData.toppings.forEach {
+//                    detailViewModel.getTopping(
+//                        toppingId = it!!
+//                    ) { item ->
+//                        toppingList += item
+////                        if (toppingList.size == foodData.toppings.size) {
+////
+////                        }
+//                    }
+//                }
+//                OptionalItems(
+//                    optionalList = toppingList
+//                ) { optionalItemData, isChecked ->
+//                    if (isChecked) {
+//                        detailViewModel.addTopping(optionalItemData)
+//                    } else {
+//                        detailViewModel.deleteTopping(optionalItemData)
+//                    }
+//                    Log.d(TAG, detailState.toppingList.toString())
+//                    Log.d(TAG, detailState.totalPrice.toString())
+//                }
+////                Log.d(TAG, it.toppings.toString())
+//            }
+            val toppingList = detailState.toppingList
+            OptionalItems(
+                optionalList = toppingList,
+                onItemSelectedListener = { itemOptional, isChecked ->
+                    if (isChecked) {
+                        detailViewModel.addTopping(itemOptional)
+                    } else {
+                        detailViewModel.deleteTopping(itemOptional)
+                    }
+                }
+            )
         }
     }
+
 }
+
+const val TAG = "DetailScreen"

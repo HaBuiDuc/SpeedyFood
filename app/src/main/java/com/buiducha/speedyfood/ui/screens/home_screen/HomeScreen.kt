@@ -32,30 +32,41 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import com.buiducha.speedyfood.data.model.FoodData
+import com.buiducha.speedyfood.ui.screens.navigation.Screen
 import com.buiducha.speedyfood.ui.theme.Ivory
 import com.buiducha.speedyfood.ui.theme.LightGray
-import com.buiducha.speedyfood.ui.theme.VeryLightGray
 import com.buiducha.speedyfood.viewmodel.HomeViewModel
+import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+//    HomeScreen()
 }
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun HomeScreen(
+    navController: NavController,
+    foodViewModel: FoodViewModel,
     homeViewModel: HomeViewModel = viewModel()
 ) {
     val homeState by homeViewModel.homeState.collectAsState()
     var selectedItem by remember { mutableIntStateOf(0) }
     val items = listOf("Songs", "Artists", "Playlists")
     val focusManager = LocalFocusManager.current
+
+    fun onDetailNavigate(foodData: FoodData) {
+        navController.navigate(Screen.DetailScreen.route)
+        foodViewModel.foodUpdate(foodData)
+    }
+
     Scaffold(
         topBar = {
             HomeTopBar(
-                location = "New York, NYC",
+                location = "Thu Duc, Viet Nam",
                 modifier = Modifier
                     .padding(
                         all = 16.dp
@@ -64,25 +75,25 @@ fun HomeScreen(
 
             }
         },
-        bottomBar = {
-            NavigationBar(
-                containerColor = LightGray,
-                modifier = Modifier
-                    .padding(10.dp)
-                    .clip(RoundedCornerShape(36.dp))
-            ) {
-                items.forEachIndexed { index, item ->
-
-                    NavigationBarItem(
-                        icon = { Icon(Icons.Filled.Favorite, contentDescription = item) },
-                        selected = selectedItem == index,
-                        onClick = { selectedItem = index },
-                        modifier = Modifier
-                    )
-                }
-            }
-
-        }
+//        bottomBar = {
+//            NavigationBar(
+//                containerColor = LightGray,
+//                modifier = Modifier
+//                    .padding(10.dp)
+//                    .clip(RoundedCornerShape(36.dp))
+//            ) {
+//                items.forEachIndexed { index, item ->
+//
+//                    NavigationBarItem(
+//                        icon = { Icon(Icons.Filled.Favorite, contentDescription = item) },
+//                        selected = selectedItem == index,
+//                        onClick = { selectedItem = index },
+//                        modifier = Modifier
+//                    )
+//                }
+//            }
+//
+//        }
     ) { padding ->
         val scrollState = rememberScrollState()
         Column(
@@ -108,7 +119,11 @@ fun HomeScreen(
                 foodList = homeState.foodList,
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
-            )
+            ) {food ->
+//                navController.navigate(Screen.DetailScreen.route)
+//                foodViewModel.foodUpdate(food)
+                onDetailNavigate(food)
+            }
             Spacer(modifier = Modifier.height(16.dp))
             Box(
                 modifier = Modifier
@@ -123,7 +138,11 @@ fun HomeScreen(
                     .padding(
                         horizontal = 16.dp
                     )
-            )
+            ) {food ->
+                onDetailNavigate(food)
+            }
         }
     }
 }
+
+

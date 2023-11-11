@@ -1,4 +1,4 @@
-package com.buiducha.speedyfood.ui.screens.authentication_screens.register_screen
+package com.buiducha.speedyfood.ui.screens.auth_screens.register_screen
 
 import android.app.Activity
 import androidx.compose.foundation.clickable
@@ -16,26 +16,27 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Password
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.SemanticsProperties.Focused
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,34 +45,35 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.buiducha.speedyfood.R
-import com.buiducha.speedyfood.ui.screens.shareds.SimpleTopBar
+import com.buiducha.speedyfood.ui.screens.navigation.Screen
 import com.buiducha.speedyfood.ui.theme.AuthenticTextFieldColor
 import com.buiducha.speedyfood.ui.theme.DarkGreen
 import com.buiducha.speedyfood.ui.theme.TextBoldStyle
 import com.buiducha.speedyfood.ui.theme.TextSemiBoldStyle
 import com.buiducha.speedyfood.viewmodel.RegisterViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Preview
 @Composable
 fun RegisterScreenPreview() {
-    RegisterScreen()
+//    RegisterScreen()
 }
 
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier,
+    navController: NavController,
     registerViewModel: RegisterViewModel = viewModel()
 ) {
-    var userName by remember {
-        mutableStateOf("")
-    }
     var emailOrPhone by remember {
         mutableStateOf("")
     }
@@ -83,15 +85,12 @@ fun RegisterScreen(
     }
     val activity = LocalContext.current as Activity
     val focusManager = LocalFocusManager.current
+    val scope = rememberCoroutineScope()
+    val snackBarHostState = remember { SnackbarHostState() }
     Scaffold(
-        topBar = {
-            SimpleTopBar(
-                onBackListener = {
-                },
-                modifier = Modifier
-                    .padding(16.dp)
-            )
-        }
+        snackbarHost = {
+            SnackbarHost(hostState = snackBarHostState)
+        },
     ) { padding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -109,39 +108,13 @@ fun RegisterScreen(
                 .padding(16.dp)
 
         ) {
+            Spacer(modifier = Modifier.height(40.dp))
             Text(
                 text = stringResource(id = R.string.create_an_account),
                 style = TextBoldStyle,
-                fontSize = 24.sp
+                fontSize = 32.sp
             )
-            Spacer(modifier = Modifier.height(32.dp))
-            TextField(
-                value = userName,
-                onValueChange = {
-                    userName = it
-                },
-                colors = AuthenticTextFieldColor(),
-                shape = RoundedCornerShape(10.dp),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.Person,
-                        contentDescription = null
-                    )
-                },
-                label = {
-                    Text(text = stringResource(id = R.string.user_name))
-                },
-                placeholder = {
-                    if (LocalFocusManager.current == Focused) {
-                        Text(
-                            text = stringResource(id = R.string.user_name)
-                        )
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(40.dp))
             TextField(
                 value = emailOrPhone,
                 onValueChange = {
@@ -156,12 +129,12 @@ fun RegisterScreen(
                     )
                 },
                 label = {
-                    Text(text = stringResource(id = R.string.email_or_phone))
+                    Text(text = stringResource(id = R.string.email))
                 },
                 placeholder = {
                     if (LocalFocusManager.current == Focused) {
                         Text(
-                            text = stringResource(id = R.string.email_or_phone)
+                            text = stringResource(id = R.string.email)
                         )
                     }
                 },
@@ -221,12 +194,28 @@ fun RegisterScreen(
                     containerColor = DarkGreen
                 ),
                 onClick = {
-                    registerViewModel.createUser(
-                        activity = activity,
-                        email = emailOrPhone,
-                        password = password
-                    ) {
-
+                    if (registerViewModel.isValueValid(emailOrPhone, password)) {
+                        registerViewModel.createUser(
+                            activity = activity,
+                            email = emailOrPhone,
+                            password = password,
+                            onCreateSuccess = {
+                                scope.launch {
+                                    snackBarHostState.showSnackbar("Create account successfully")
+                                    delay(2000)
+                                    navController.navigate(Screen.LoginScreen.route)
+                                }
+                            },
+                            onCreateFailure = {
+                                scope.launch {
+                                    snackBarHostState.showSnackbar("Create account failure")
+                                }
+                            }
+                        )
+                    } else {
+                        scope.launch {
+                            snackBarHostState.showSnackbar("Email or password invalid")
+                        }
                     }
                 },
                 modifier = Modifier
@@ -250,7 +239,10 @@ fun RegisterScreen(
                     fontSize = 16.sp,
                     color = DarkGreen,
                     modifier = Modifier
-                        .clickable {  }
+                        .clickable {
+                            navController.navigate(Screen.LoginScreen.route)
+
+                        }
                 )
             }
             val composition by rememberLottieComposition(

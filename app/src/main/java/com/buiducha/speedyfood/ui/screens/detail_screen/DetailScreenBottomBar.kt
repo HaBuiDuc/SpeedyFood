@@ -32,11 +32,14 @@ import com.buiducha.speedyfood.ui.theme.Gold
 @Preview
 @Composable
 fun DetailBottomBarPreview() {
-    DetailScreenBottomBar()
+    DetailScreenBottomBar(
+        36.0
+    )
 }
 
 @Composable
 fun DetailScreenBottomBar(
+    totalPrice: Double,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -61,7 +64,7 @@ fun DetailScreenBottomBar(
                     tint = Gold
                 )
                 Text(
-                    text = "36.00",
+                    text = totalPrice.toString(),
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp
                 )

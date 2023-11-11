@@ -1,6 +1,5 @@
 package com.buiducha.speedyfood.ui.screens.home_screen
 
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +26,8 @@ fun RecommendedFoodsPreview() {
 @Composable
 fun RecommendedFoods(
     foodList: List<FoodData>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onFoodSelect: (FoodData) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -42,11 +42,13 @@ fun RecommendedFoods(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(foodList) {item ->
-                Log.d("This is a log", item.toString())
+//                Log.d("This is a log", item.toString())
 
                 FoodItemVer(
                     food = item
-                )
+                ) {food ->
+                    onFoodSelect(food)
+                }
             }
         }
     }

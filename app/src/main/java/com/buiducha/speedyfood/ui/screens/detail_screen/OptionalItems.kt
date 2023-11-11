@@ -57,8 +57,9 @@ fun OptionalItemsPreview() {
 
 @Composable
 fun OptionalItems(
-    optionalList: List<OptionalItemData>,
-    modifier: Modifier = Modifier
+    optionalList: Set<OptionalItemData>,
+    modifier: Modifier = Modifier,
+    onItemSelectedListener: (OptionalItemData, Boolean) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -75,7 +76,10 @@ fun OptionalItems(
         )
         Column {
             optionalList.forEach { item ->
-                OptionalItemView(optionalItem = item)
+                OptionalItemView(
+                    optionalItem = item,
+                    onItemSelectedListener = onItemSelectedListener
+                )
             }
         }
     }
@@ -89,12 +93,15 @@ fun OptionalItemPreview() {
             name = "Trung ga chien",
             price = 5000f.toDouble()
         )
-    )
+    ) { _, _ ->
+
+    }
 }
 
 @Composable
 fun OptionalItemView(
-    optionalItem: OptionalItemData
+    optionalItem: OptionalItemData,
+    onItemSelectedListener: (OptionalItemData, Boolean) -> Unit
 ) {
     var isChecked by remember {
         mutableStateOf(false)
@@ -115,6 +122,7 @@ fun OptionalItemView(
             .fillMaxWidth()
             .clickable {
                 isChecked = !isChecked
+                onItemSelectedListener(optionalItem, isChecked)
             }
             .padding(end = 16.dp)
     ) {

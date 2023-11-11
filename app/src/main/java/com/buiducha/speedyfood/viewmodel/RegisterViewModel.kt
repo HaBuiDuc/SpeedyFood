@@ -3,31 +3,34 @@ package com.buiducha.speedyfood.viewmodel
 import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.buiducha.speedyfood.data.repository.FireBaseRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class RegisterViewModel : ViewModel() {
-    private var auth: FirebaseAuth = Firebase.auth
+    private val fireBaseRepository = FireBaseRepository.get()
 
     fun createUser(
         activity: Activity,
         email: String,
         password: String,
-        onSuccessful: () -> Unit
+        onCreateSuccess: () -> Unit,
+        onCreateFailure: () -> Unit
     ) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(activity) { task ->
-                if (task.isSuccessful) {
-//                    onSuccessful()
-                    val user = auth.currentUser
-                    user?.sendEmailVerification()
-                    Log.d(TAG, "create user successfully")
-                } else if (task.isCanceled) {
-                    Log.d(TAG, "create user failure")
-                }
-            }
+        fireBaseRepository.createUser(
+            activity = activity,
+            email = email,
+            password = password,
+            onCreateSuccess = onCreateSuccess,
+            onCreateFailure = onCreateFailure
+        )
     }
+
+    fun isValueValid(
+        email: String,
+        password: String,
+    ): Boolean = email.isNotEmpty() && password.isNotEmpty()
 
     companion object {
         const val TAG = "RegisterViewModel"

@@ -1,4 +1,4 @@
-package com.buiducha.speedyfood.ui.screens.authentication_screens.login_screen
+package com.buiducha.speedyfood.ui.screens.auth_screens.login_screen
 
 import android.app.Activity
 import androidx.compose.foundation.clickable
@@ -22,12 +22,15 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,28 +46,32 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.buiducha.speedyfood.R
-import com.buiducha.speedyfood.ui.screens.shareds.SimpleTopBar
+import com.buiducha.speedyfood.ui.screens.navigation.Screen
 import com.buiducha.speedyfood.ui.theme.AuthenticTextFieldColor
 import com.buiducha.speedyfood.ui.theme.DarkGreen
 import com.buiducha.speedyfood.ui.theme.TextBoldStyle
 import com.buiducha.speedyfood.ui.theme.TextSemiBoldStyle
+import com.buiducha.speedyfood.utils.startMainActivity
 import com.buiducha.speedyfood.viewmodel.LoginViewModel
+import kotlinx.coroutines.launch
 
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+//    LoginScreen()
 }
 
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
+    navController: NavController,
     loginViewModel: LoginViewModel = viewModel()
 ) {
     var emailOrPhone by remember {
@@ -76,18 +83,15 @@ fun LoginScreen(
     var isPasswordVisible by remember {
         mutableStateOf(false)
     }
+    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val activity = LocalContext.current as Activity
+    val scope = rememberCoroutineScope()
+    val snackBarHostState = remember { SnackbarHostState() }
     Scaffold(
-        topBar = {
-            SimpleTopBar(
-                onBackListener = {
-
-                },
-                modifier = Modifier
-                    .padding(16.dp)
-            )
-        }
+        snackbarHost = {
+            SnackbarHost(hostState = snackBarHostState)
+        },
     ) { padding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -105,10 +109,11 @@ fun LoginScreen(
                 .padding(16.dp)
 
         ) {
+            Spacer(modifier = Modifier.height(40.dp))
             Text(
                 text = stringResource(id = R.string.log_in),
                 style = TextBoldStyle,
-                fontSize = 24.sp
+                fontSize = 32.sp
             )
             Spacer(modifier = Modifier.height(32.dp))
             TextField(
@@ -125,12 +130,12 @@ fun LoginScreen(
                     )
                 },
                 label = {
-                    Text(text = stringResource(id = R.string.email_or_phone))
+                    Text(text = stringResource(id = R.string.email))
                 },
                 placeholder = {
                     if (LocalFocusManager.current == Focused) {
                         Text(
-                            text = stringResource(id = R.string.email_or_phone)
+                            text = stringResource(id = R.string.email)
                         )
                     }
                 },
@@ -190,11 +195,34 @@ fun LoginScreen(
                     containerColor = DarkGreen
                 ),
                 onClick = {
-                    loginViewModel.userLogin(
-                        activity = activity,
-                        email = emailOrPhone,
-                        password = password
-                    )
+                    if (loginViewModel.isValueValid(emailOrPhone, password)) {
+                        loginViewModel.userLogin(
+                            activity = activity,
+                            email = emailOrPhone,
+                            password = password,
+                            onLoginSuccess = {
+//                                loginViewModel.startMainActivity(context = context)
+//                                navController.navigate(Screen.AddInfoScreen.route)
+                                loginViewModel.onLoginSuccess(
+                                    onUserExists = {
+                                        startMainActivity(context = context)
+                                    },
+                                    onUserNotExists = {
+                                        navController.navigate(Screen.AddInfoScreen.route)
+                                    }
+                                )
+                            },
+                            onLoginFailure = { msg ->
+                                scope.launch {
+                                    snackBarHostState.showSnackbar(msg)
+                                }
+                            }
+                        )
+                    } else {
+                        scope.launch {
+                            snackBarHostState.showSnackbar("Email or password invalid")
+                        }
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -243,7 +271,9 @@ fun LoginScreen(
                     fontSize = 16.sp,
                     color = DarkGreen,
                     modifier = Modifier
-                        .clickable {  }
+                        .clickable {
+                            navController.navigate(Screen.RegisterScreen.route)
+                        }
                 )
             }
             LottieAnimation(

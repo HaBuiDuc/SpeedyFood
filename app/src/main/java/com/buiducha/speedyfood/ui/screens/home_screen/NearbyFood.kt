@@ -17,13 +17,14 @@ import com.buiducha.speedyfood.ui.theme.TextSemiBoldStyle
 @Composable
 fun NearbyFood(
     foodList: List<FoodData>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onFoodSelect: (FoodData) -> Unit
 ) {
     Column(
         modifier = modifier
     ) {
         Text(
-            text = stringResource(id = R.string.nearby_food),
+            text = stringResource(id = R.string.all_food),
             style = TextSemiBoldStyle,
             fontSize = 24.sp
         )
@@ -34,7 +35,8 @@ fun NearbyFood(
         ) {
             foodList.forEach {food ->
                 FoodItemHor(
-                    foodData = food
+                    foodData = food,
+                    onFoodSelect = onFoodSelect
                 )
             }
         }

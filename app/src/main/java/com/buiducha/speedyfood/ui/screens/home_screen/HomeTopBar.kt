@@ -3,6 +3,7 @@ package com.buiducha.speedyfood.ui.screens.home_screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -27,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.buiducha.speedyfood.R
@@ -44,6 +47,7 @@ fun HomeTopBar(
     location: String,
     modifier: Modifier = Modifier,
     onSettingsClickListener: () -> Unit,
+    onSearchToggle: () -> Unit
 ) {
     Row(
         modifier = modifier
@@ -51,6 +55,7 @@ fun HomeTopBar(
     ) {
         FoodSearchView(
             location = location,
+            onSearchToggle = onSearchToggle,
             modifier = Modifier
                 .weight(1f)
         )
@@ -64,10 +69,12 @@ fun HomeTopBar(
 @Composable
 fun FoodSearchView(
     location: String,
+    onSearchToggle: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        contentAlignment = Alignment.CenterStart,
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
             .border(
                 0.8.dp,
@@ -76,11 +83,10 @@ fun FoodSearchView(
             )
             .height(48.dp)
             .padding(horizontal = 8.dp)
+            .clickable {
+                onSearchToggle()
+            }
     ) {
-//        var query by remember {
-//            mutableStateOf("")
-//        }
-
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -88,32 +94,15 @@ fun FoodSearchView(
                 imageVector = Icons.Default.Search,
                 contentDescription = stringResource(id = R.string.image_des)
             )
-//            TextField(
-//                value = query,
-//                onValueChange = {
-//                    query = it
-//                },
-//                placeholder = {
-//                    Text(text = "Search")
-//                },
-//                colors = TextFieldDefaults.colors(
-//                    focusedContainerColor = Color.Transparent,
-//                    unfocusedContainerColor = Color.Transparent,
-//                    disabledContainerColor = Color.Transparent,
-//                    focusedIndicatorColor = Color.Transparent,
-//                    unfocusedIndicatorColor = Color.Transparent,
-//                    disabledIndicatorColor = Color.Transparent
-//                )
-//            )
             Text(
                 text = "Search",
                 fontWeight = FontWeight.Light
             )
         }
+        Spacer(modifier = Modifier.width(24.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .align(Alignment.CenterEnd)
         ) {
             Box(
                 modifier = Modifier
@@ -121,14 +110,16 @@ fun FoodSearchView(
                     .fillMaxHeight(0.4f)
                     .background(Color.Gray)
             )
-            Spacer(modifier = Modifier.width(24.dp))
+            Spacer(modifier = Modifier.width(8.dp))
             Icon(
                 imageVector = Icons.Outlined.LocationOn,
                 contentDescription = stringResource(id = R.string.image_des)
             )
             Text(
                 text = location,
-                style = TextLightStyle
+                style = TextLightStyle,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
             )
         }
     }
@@ -152,7 +143,8 @@ fun SettingButton(
 
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.icon_settings),
+//            painter = painterResource(id = R.drawable.icon_settings),
+            imageVector = Icons.Default.ShoppingCart,
             contentDescription = stringResource(id = R.string.image_des),
             modifier = Modifier
                 .padding(16.dp),

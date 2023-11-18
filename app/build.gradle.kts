@@ -78,7 +78,7 @@ dependencies {
 
 
     // Bottom navigation bar
-    implementation ("androidx.navigation:navigation-compose:2.7.4")
+    implementation ("androidx.navigation:navigation-compose:2.7.5")
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
@@ -93,10 +93,13 @@ dependencies {
     // Lottie animation
     implementation("com.airbnb.android:lottie-compose:6.0.0")
 
-//     Room database
+    // Room database
     val room_version = "2.6.0"
-
     implementation ("androidx.room:room-ktx:$room_version")
     kapt ("androidx.room:room-compiler:$room_version")
+
+    // Location
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+    implementation ("com.google.android.libraries.places:places:3.2.0")
 
 }

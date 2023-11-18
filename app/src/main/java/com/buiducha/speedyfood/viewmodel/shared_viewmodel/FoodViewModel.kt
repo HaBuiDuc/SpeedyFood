@@ -1,40 +1,23 @@
 package com.buiducha.speedyfood.viewmodel.shared_viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.buiducha.speedyfood.data.model.FoodData
-import com.buiducha.speedyfood.data.model.OptionalItemData
 import com.buiducha.speedyfood.data.repository.FireBaseRepository
+import com.buiducha.speedyfood.viewmodel.HomeViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.asStateFlow
 
-class FoodViewModel : ViewModel(){
+class FoodViewModel : ViewModel() {
     private val fireBaseRepository = FireBaseRepository.get()
-    private val _foodData = MutableStateFlow<FoodData?>(null)
-    private val _toppingsData = MutableStateFlow<MutableList<OptionalItemData>>(mutableListOf())
-    val foodData: StateFlow<FoodData?> get() = _foodData
-    val toppingData: StateFlow<List<OptionalItemData>> get() = _toppingsData
+    private val _foodDataList = MutableStateFlow<List<FoodData>>(emptyList())
+    val foodDataList: StateFlow<List<FoodData>> = _foodDataList.asStateFlow()
 
     init {
-        getToppings()
-    }
-
-    fun foodUpdate(data: FoodData) {
-        _foodData.value = data
-    }
-
-    private fun getToppings() {
-        viewModelScope.launch {
-            _foodData.collect {foodData ->
-                foodData?.toppings?.forEach { toppingId ->
-                    fireBaseRepository.getTopping(
-                        toppingId = toppingId!!
-                    ) {item ->
-                        _toppingsData.value += item
-                    }
-                }
-            }
+        fireBaseRepository.foodDataListener {
+            _foodDataList.value = it
+            Log.d(HomeViewModel.TAG, it.toString())
         }
     }
 }

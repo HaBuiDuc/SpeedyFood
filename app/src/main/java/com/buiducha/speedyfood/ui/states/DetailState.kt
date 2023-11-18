@@ -11,6 +11,13 @@ data class DetailState(
     var addedTopping: MutableSet<String> = mutableSetOf()
 ) {
     private val df = DecimalFormat("#.##")
+    val price: Double
+        get() = df.format(
+            (food?.price!! + addedTopping.sumOf {
+                    topping -> toppingList.find { it.id == topping }?.price ?: 0.0
+            })
+        ).toDouble()
+
     val totalPrice: Double
         get() = df.format(
             (food?.price!! + addedTopping.sumOf {

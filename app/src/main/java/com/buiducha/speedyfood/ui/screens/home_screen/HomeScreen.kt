@@ -11,23 +11,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,10 +30,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.buiducha.speedyfood.data.model.FoodData
 import com.buiducha.speedyfood.ui.screens.navigation.Screen
+import com.buiducha.speedyfood.ui.screens.shareds.HorizontalLine
 import com.buiducha.speedyfood.ui.theme.Ivory
-import com.buiducha.speedyfood.ui.theme.LightGray
+import com.buiducha.speedyfood.utils.getAddress
+import com.buiducha.speedyfood.utils.getDetailAddress
 import com.buiducha.speedyfood.viewmodel.HomeViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
+import com.buiducha.speedyfood.viewmodel.shared_viewmodel.SelectedFoodViewModel
+import com.buiducha.speedyfood.viewmodel.shared_viewmodel.LocationViewModel
 
 @Preview
 @Composable
@@ -50,8 +49,10 @@ fun HomeScreenPreview() {
 @Composable
 fun HomeScreen(
     navController: NavController,
+    selectedFoodViewModel: SelectedFoodViewModel,
+    locationViewModel: LocationViewModel,
     foodViewModel: FoodViewModel,
-    homeViewModel: HomeViewModel = viewModel()
+    homeViewModel: HomeViewModel = viewModel {HomeViewModel(foodViewModel)}
 ) {
     val homeState by homeViewModel.homeState.collectAsState()
     var selectedItem by remember { mutableIntStateOf(0) }
@@ -60,20 +61,32 @@ fun HomeScreen(
 
     fun onDetailNavigate(foodData: FoodData) {
         navController.navigate(Screen.DetailScreen.route)
-        foodViewModel.foodUpdate(foodData)
+        selectedFoodViewModel.foodUpdate(foodData)
     }
+
+//    val location by remember {
+//        mutableStateOf("")
+//    }
+
+    val location by locationViewModel.currentLocation.collectAsState()
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
             HomeTopBar(
-                location = "Thu Duc, Viet Nam",
+                location = location?.getDetailAddress(context) ?: "null",
+                onSearchToggle = {
+                    navController.navigate(Screen.SearchScreen.route)
+                },
+                onSettingsClickListener = {
+                    navController.navigate(Screen.CartScreen.route)
+                },
                 modifier = Modifier
                     .padding(
                         all = 16.dp
                     )
-            ) {
-
-            }
+            )
         },
 //        bottomBar = {
 //            NavigationBar(
@@ -125,12 +138,9 @@ fun HomeScreen(
                 onDetailNavigate(food)
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Box(
+            HorizontalLine(
                 modifier = Modifier
                     .padding(vertical = 16.dp)
-                    .fillMaxWidth()
-                    .height(8.dp)
-                    .background(Color.LightGray)
             )
             NearbyFood(
                 foodList = homeState.foodList,

@@ -17,6 +17,12 @@ class CartRepository private constructor(context: Context){
 
     suspend fun addItem(itemData: CartItemData) = database.cartDao().addItem(itemData)
 
+    suspend fun updateQuantity(cartId: String, quantity: Int) = database.cartDao().updateQuantity(cartId, quantity)
+
+    suspend fun deleteItem(cartId: String) = database.cartDao().deleteItem(cartId)
+
+    suspend fun getItemByFoodAndToppings(foodId: String, toppingIds: String) = database.cartDao().getItemByFoodAndToppings(foodId, toppingIds)
+
     companion object {
         const val DATABASE_NAME = "shopping_cart"
 

@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.buiducha.speedyfood.R
 import com.buiducha.speedyfood.data.model.FoodData
+import com.buiducha.speedyfood.ui.screens.shareds.FoodItemVer
 import com.buiducha.speedyfood.ui.theme.TextSemiBoldStyle
 
 @Preview

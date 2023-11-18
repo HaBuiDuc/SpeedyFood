@@ -272,6 +272,7 @@ fun LoginScreen(
                     color = DarkGreen,
                     modifier = Modifier
                         .clickable {
+                            navController.popBackStack()
                             navController.navigate(Screen.RegisterScreen.route)
                         }
                 )

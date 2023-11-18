@@ -1,5 +1,6 @@
 package com.buiducha.speedyfood.ui.screens.cart_screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,30 +10,70 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.buiducha.speedyfood.R
+import com.buiducha.speedyfood.data.model.FoodData
 import com.buiducha.speedyfood.ui.screens.home_screen.foodList
+import com.buiducha.speedyfood.ui.screens.navigation.Screen
 import com.buiducha.speedyfood.ui.theme.Ivory
 import com.buiducha.speedyfood.ui.theme.TextBoldStyle
 import com.buiducha.speedyfood.ui.theme.TextNormalStyle
+import com.buiducha.speedyfood.viewmodel.CartViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import java.util.UUID
 
 @Preview
 @Composable
 fun CartScreenPreview() {
-    CartScreen()
+    CartScreen(rememberNavController())
 }
 
 @Composable
-fun CartScreen() {
+fun CartScreen(
+    navController: NavController,
+    cartViewModel: CartViewModel = viewModel()
+) {
+    val cartState by cartViewModel.cartState.collectAsState()
+    var dialogVisible by remember {
+        mutableStateOf(false)
+    }
+    var selectedItemId = ""
+    val scope = rememberCoroutineScope()
     Scaffold(
         topBar = {
             CartScreenTopBar(
                 modifier = Modifier
                     .padding(8.dp)
+            ) {
+                navController.popBackStack()
+            }
+        },
+        bottomBar = {
+            CheckoutBar(
+                totalPrice = cartState.totalPrice,
+                subTotal = cartState.subTotal,
+                deliveryFee = cartState.deliveryFee,
+                modifier = Modifier,
+                onCheckout = {
+                    navController.navigate(Screen.OrderScreen.route)
+                }
             )
         }
     ) { padding ->
@@ -41,6 +82,18 @@ fun CartScreen() {
                 .background(Ivory)
                 .padding(padding)
         ) {
+            if (dialogVisible) {
+                RemoveItemDialog(
+                    onDismissRequest = {
+                        dialogVisible = false
+                    },
+                    onConfirmation = {
+                        cartViewModel.deleteItem(selectedItemId)
+                        dialogVisible = false
+                    },
+                    dialogTitle = stringResource(id = R.string.remove_item)
+                )
+            }
             Column(
                 modifier = Modifier
                     .padding(16.dp)
@@ -61,12 +114,33 @@ fun CartScreen() {
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                items(foodList) {food ->
-                    CartItem(
-                        food = food
-                    )
+                if (cartState.foodItems.isNotEmpty()) {
+                    Log.d(TAG, "not empty")
+                    items(cartState.cartItems) {cartItem ->
+                        val food = cartState.foodItems.find { it.id == cartItem.foodId }
+                        Log.d(TAG, food.toString())
+                        food?.let {
+                            CartItem(
+                                cartItemData = cartItem,
+                                foodData = it,
+                                onAddQuantity = {
+                                    cartViewModel.addQuantity(cartItem.cartItemId)
+                                },
+                                onSubQuantity = {
+                                    if (cartItem.quantity > 1) {
+                                        cartViewModel.subQuantity(cartItem.cartItemId)
+                                    } else {
+                                        selectedItemId = cartItem.cartItemId
+                                        dialogVisible = true
+                                    }
+                                }
+                            )
+                        }
+                    }
                 }
             }
         }
     }
 }
+
+const val TAG = "CartScreen"

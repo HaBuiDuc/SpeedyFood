@@ -6,23 +6,24 @@ import androidx.lifecycle.viewModelScope
 import com.buiducha.speedyfood.data.model.CartItemData
 import com.buiducha.speedyfood.data.model.FoodData
 import com.buiducha.speedyfood.data.model.OptionalItemData
+import com.buiducha.speedyfood.data.repository.CartRepository
 import com.buiducha.speedyfood.data.repository.FireBaseRepository
 import com.buiducha.speedyfood.ui.states.DetailState
-import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
+import com.buiducha.speedyfood.viewmodel.shared_viewmodel.SelectedFoodViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class DetailViewModel(private val foodSharedVM: FoodViewModel) : ViewModel() {
-//    private val cartRepository = CartRepository.get()
+class DetailViewModel(private val foodSharedVM: SelectedFoodViewModel) : ViewModel() {
+    private val cartRepository = CartRepository.get()
     private val fireBaseRepository = FireBaseRepository.get()
     private val _detailState = MutableStateFlow(DetailState())
     val detailState: StateFlow<DetailState> = _detailState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            foodSharedVM.foodData.collect {data ->
+            foodSharedVM.foodData.collect { data ->
                 _detailState.value.food = data
                 data!!.toppings.forEach { topping ->
                     Log.d(TAG, topping)
@@ -79,15 +80,30 @@ class DetailViewModel(private val foodSharedVM: FoodViewModel) : ViewModel() {
         )
     }
 
-//    fun addToCart() {
-//        detailState.value.food?.let {
-//            CartItemData(
-//                foodId = it.id!!,
-//                totalPrice = detailState.value.totalPrice / detailState.value.itemQuantity,
-//                quantity = detailState.value.itemQuantity
-//            )
-//        }
-//    }
+    fun addToCart() {
+        viewModelScope.launch {
+            val cartItem = cartRepository.getItemByFoodAndToppings(
+                foodId = detailState.value.food?.id!!,
+                toppingIds = detailState.value.addedTopping.sorted().joinToString(",")
+            )
+            val newCartItem = if (cartItem == null) {
+                CartItemData(
+                    userId = fireBaseRepository.getCurrentUser()?.uid.toString(),
+                    foodId = detailState.value.food?.id!!,
+                    price = detailState.value.price,
+                    quantity = detailState.value.itemQuantity,
+                    toppingIds = detailState.value.addedTopping.toList().sorted()
+                )
+            } else {
+                val quantity = cartItem.quantity
+                cartItem.copy(
+                    quantity = quantity + 1
+                )
+            }
+            Log.d(TAG, cartItem.toString())
+            cartRepository.addItem(newCartItem)
+        }
+    }
 
     companion object {
         const val TAG = "DetailViewModel"

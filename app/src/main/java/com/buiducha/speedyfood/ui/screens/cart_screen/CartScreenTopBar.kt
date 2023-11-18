@@ -17,12 +17,13 @@ import com.buiducha.speedyfood.ui.screens.shareds.TopBarButton
 @Preview
 @Composable
 fun CartScreenTopBarPreview() {
-    CartScreenTopBar()
+    CartScreenTopBar(onBackListener = {})
 }
 
 @Composable
 fun CartScreenTopBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onBackListener: () -> Unit,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -34,7 +35,7 @@ fun CartScreenTopBar(
         TopBarButton(
             imageVector = Icons.Filled.ArrowBackIosNew,
             onClick = {
-
+                onBackListener()
             }
         )
         TopBarButton(

@@ -35,26 +35,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.buiducha.speedyfood.R
+import com.buiducha.speedyfood.data.model.CartItemData
+import com.buiducha.speedyfood.data.model.FoodData
 import com.buiducha.speedyfood.ui.screens.home_screen.ItemFood
 import com.buiducha.speedyfood.ui.theme.DarkGray
+import com.buiducha.speedyfood.ui.theme.Orange
 import com.buiducha.speedyfood.ui.theme.TextSemiBoldStyle
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 
 @Preview
 @Composable
 fun CartItemPreview() {
-    CartItem(
-        food = ItemFood(
-            imageId = R.drawable.beef_steak,
-            label = "Beef steak",
-            price = "36"
-        )
-    )
+//    CartItem(
+//        food = ItemFood(
+//            imageId = R.drawable.beef_steak,
+//            label = "Beef steak",
+//            price = "36"
+//        )
+//    )
 }
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun CartItem(
-    food: ItemFood,
-    modifier: Modifier = Modifier
+    cartItemData: CartItemData,
+    foodData: FoodData,
+    modifier: Modifier = Modifier,
+    onAddQuantity: () -> Unit,
+    onSubQuantity: () -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -71,44 +80,71 @@ fun CartItem(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                painter = painterResource(id = food.imageId),
+//            Image(
+//                painter = painterResource(id = food.imageId),
+//                contentDescription = null,
+//                contentScale = ContentScale.Crop,
+//                modifier = Modifier
+//                    .clip(CircleShape)
+//                    .size(80.dp)
+//            )
+            GlideImage(
+                model = foodData.imageUri,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .clip(CircleShape)
                     .size(80.dp)
+                    .aspectRatio(1f)
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column {
                 Text(
-                    text = food.label,
+                    text = foodData.name!!,
                     style = TextSemiBoldStyle,
-                    fontSize = 18.sp
+                    fontSize = 20.sp
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 Row {
                     Text(
-                        text = "$${food.price}",
+                        text = "$${cartItemData.price}",
                         style = TextSemiBoldStyle,
-                        fontSize = 18.sp
+                        fontSize = 17.sp,
+                        color = Orange
+                    )
+                    Text(
+                        text = " x ",
+                        style = TextSemiBoldStyle,
+                        fontSize = 17.sp,
+                        color = Orange
+                    )
+                    Text(
+                        text = "${cartItemData.quantity}",
+                        style = TextSemiBoldStyle,
+                        fontSize = 17.sp,
+                        color = Orange
                     )
                 }
             }
         }
-        ChangeQuantityButton()
+        ChangeQuantityButton(
+            onAddQuantity = onAddQuantity,
+            onSubQuantity = onSubQuantity
+        )
     }
 }
 
 @Preview
 @Composable
 fun ChangeQuantityButtonPreview() {
-    ChangeQuantityButton()
+//    ChangeQuantityButton()
 }
 
 @Composable
 fun ChangeQuantityButton(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onAddQuantity: () -> Unit,
+    onSubQuantity: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -127,7 +163,9 @@ fun ChangeQuantityButton(
                 .width(32.dp)
         ) {
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    onAddQuantity()
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = DarkGray
                 ),
@@ -142,7 +180,9 @@ fun ChangeQuantityButton(
                 )
             }
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    onSubQuantity()
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Black
                 ),

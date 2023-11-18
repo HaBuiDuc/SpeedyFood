@@ -25,6 +25,10 @@ class FireBaseRepository private constructor(context: Context) {
 
     fun getCurrentUser() = auth.currentUser
 
+    fun placeOrder() {
+
+    }
+
     fun getUserInfo(userId: String) {
         usersRef.orderByChild("id").equalTo(userId).addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -130,6 +134,25 @@ class FireBaseRepository private constructor(context: Context) {
                 Log.d(TAG, "login failure")
                 onLoginFailure("Login failure")
             }
+    }
+
+    fun getFood(
+        foodId: String,
+        onGetFoodSuccess: (FoodData) -> Unit
+    ) {
+        foodsRef.orderByChild("id").equalTo(foodId).addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach { shot ->
+                    Log.d(TAG, shot.value.toString())
+                    val data = shot.getValue(FoodData::class.java)
+                    data?.let(onGetFoodSuccess)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        })
     }
 
     fun foodDataListener(

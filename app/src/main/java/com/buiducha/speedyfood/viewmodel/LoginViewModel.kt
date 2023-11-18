@@ -38,13 +38,6 @@ class LoginViewModel : ViewModel() {
         )
     }
 
-//    fun startMainActivity(context: Context) {
-//        Log.d(TAG, "startMainActivity: ")
-//        val intent = Intent(context, MainActivity::class.java)
-//        (context as Activity).finish()
-//        context.startActivity(intent)
-//    }
-
     fun isValueValid(
         email: String,
         password: String,

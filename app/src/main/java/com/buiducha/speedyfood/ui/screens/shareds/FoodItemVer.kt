@@ -1,4 +1,4 @@
-package com.buiducha.speedyfood.ui.screens.home_screen
+package com.buiducha.speedyfood.ui.screens.shareds
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

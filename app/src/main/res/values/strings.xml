@@ -2,7 +2,6 @@
     <string name="app_name">SpeedyFood</string>
 
     <string name="image_des">Image des</string>
-
     <string name="rice">Rice</string>
     <string name="soup">Soup</string>
     <string name="drink">Drink</string>
@@ -32,4 +31,18 @@
     <string name="phone_number">Phone number</string>
     <string name="fill_information_guide">Let\'s fill in your information</string>
     <string name="submit">Submit</string>
+    <string name="remove_item">Are you sure you want to remove this item?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="checkout">Check out</string>
+    <string name="sub_total">Sub total</string>
+    <string name="delivery">Delivery</string>
+    <string name="total">Total</string>
+    <string name="search_placeholder">Would you like to eat something?</string>
+    <string name="deliver_to">Deliver to</string>
+    <string name="place_order">Place order</string>
+    <string name="order_summary">Order summary</string>
+    <string name="add_note">Add note</string>
+    <string name="address_config">Add address details and delivery instructions</string>
+    <string name="edit">Edit</string>
 </resources>

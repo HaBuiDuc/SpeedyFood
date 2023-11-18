@@ -240,6 +240,7 @@ fun RegisterScreen(
                     color = DarkGreen,
                     modifier = Modifier
                         .clickable {
+                            navController.popBackStack()
                             navController.navigate(Screen.LoginScreen.route)
 
                         }

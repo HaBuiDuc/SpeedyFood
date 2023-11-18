@@ -34,13 +34,16 @@ import com.buiducha.speedyfood.ui.theme.Gold
 fun DetailBottomBarPreview() {
     DetailScreenBottomBar(
         36.0
-    )
+    ) {
+
+    }
 }
 
 @Composable
 fun DetailScreenBottomBar(
     totalPrice: Double,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onAddToCart: () -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -71,7 +74,9 @@ fun DetailScreenBottomBar(
             }
         }
         FilledTonalButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                onAddToCart()
+            },
             shape = RoundedCornerShape(
                 topEnd = 16.dp,
                 bottomStart = 20.dp,

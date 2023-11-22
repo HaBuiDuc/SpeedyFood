@@ -88,25 +88,6 @@ fun HomeScreen(
                     )
             )
         },
-//        bottomBar = {
-//            NavigationBar(
-//                containerColor = LightGray,
-//                modifier = Modifier
-//                    .padding(10.dp)
-//                    .clip(RoundedCornerShape(36.dp))
-//            ) {
-//                items.forEachIndexed { index, item ->
-//
-//                    NavigationBarItem(
-//                        icon = { Icon(Icons.Filled.Favorite, contentDescription = item) },
-//                        selected = selectedItem == index,
-//                        onClick = { selectedItem = index },
-//                        modifier = Modifier
-//                    )
-//                }
-//            }
-//
-//        }
     ) { padding ->
         val scrollState = rememberScrollState()
         Column(

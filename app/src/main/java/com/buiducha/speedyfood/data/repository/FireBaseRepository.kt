@@ -5,9 +5,9 @@ import android.content.Context
 import android.util.Log
 import com.buiducha.speedyfood.data.model.FoodData
 import com.buiducha.speedyfood.data.model.OptionalItemData
+import com.buiducha.speedyfood.data.model.OrderData
 import com.buiducha.speedyfood.data.model.UserData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserInfo
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,12 +21,27 @@ class FireBaseRepository private constructor(context: Context) {
     private val foodsRef = database.getReference("foods")
     private val toppingsRef = database.getReference("toppings")
     private val usersRef = database.getReference("users")
+    private val orderRef = database.getReference("orders")
     private var auth: FirebaseAuth = Firebase.auth
 
     fun getCurrentUser() = auth.currentUser
 
-    fun placeOrder() {
-
+    fun placeOrder(
+        orderData: OrderData,
+        onOrderSuccess: () -> Unit,
+        onOrderFailure: () -> Unit
+    ) {
+        orderRef.push().setValue(orderData)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.d(TAG, "add order success")
+                    onOrderSuccess()
+                }
+            }
+            .addOnFailureListener {e ->
+                Log.e(TAG, "add order failure", e)
+                onOrderFailure()
+            }
     }
 
     fun getUserInfo(userId: String) {
@@ -59,6 +74,7 @@ class FireBaseRepository private constructor(context: Context) {
             }
 
             override fun onCancelled(error: DatabaseError) {
+
             }
 
         })

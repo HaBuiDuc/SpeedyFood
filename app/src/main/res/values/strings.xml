@@ -45,4 +45,11 @@
     <string name="add_note">Add note</string>
     <string name="address_config">Add address details and delivery instructions</string>
     <string name="edit">Edit</string>
+    <string name="order_successful">Your order has been placed successfully!</string>
+    <string name="order_id">Order id: </string>
+    <string name="accomplished">Accomplished</string>
+    <string name="processing">Processing</string>
+    <string name="order">Order</string>
+    <string name="delivery_address">Delivery address</string>
+    <string name="item_list">Item list</string>
 </resources>

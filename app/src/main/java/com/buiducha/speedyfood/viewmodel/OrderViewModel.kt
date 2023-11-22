@@ -2,9 +2,9 @@ package com.buiducha.speedyfood.viewmodel
 
 import android.content.Context
 import android.util.Log
-import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.buiducha.speedyfood.data.model.OrderData
 import com.buiducha.speedyfood.data.repository.CartRepository
 import com.buiducha.speedyfood.data.repository.FireBaseRepository
 import com.buiducha.speedyfood.ui.states.OrderState
@@ -70,8 +70,31 @@ class OrderViewModel(
         }
     }
 
-    fun placeOrder() {
+    fun placeOrder(
+        onOrderSuccessful: () -> Unit,
+        onOrderFailure: () -> Unit
+    ) {
+        val order = OrderData(
+            userId = fireBaseRepository.getCurrentUser()?.uid!!,
+            address = orderState.value.fullAddress,
+            totalPrice = orderState.value.totalPrice,
+            orderDate = "26/09/2003",
+            note = orderState.value.note,
+            itemList = orderState.value.cartItems
+        )
 
+        fireBaseRepository.placeOrder(
+            orderData = order,
+            onOrderSuccess = {
+                viewModelScope.launch {
+                    cartRepository.deleteAll()
+                }
+                onOrderSuccessful()
+            },
+            onOrderFailure = {
+                onOrderFailure()
+            }
+        )
     }
     companion object {
         const val TAG = "OrderViewModel"

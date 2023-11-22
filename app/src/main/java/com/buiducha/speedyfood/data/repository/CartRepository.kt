@@ -23,6 +23,8 @@ class CartRepository private constructor(context: Context){
 
     suspend fun getItemByFoodAndToppings(foodId: String, toppingIds: String) = database.cartDao().getItemByFoodAndToppings(foodId, toppingIds)
 
+    suspend fun deleteAll() = database.cartDao().deleteAll()
+
     companion object {
         const val DATABASE_NAME = "shopping_cart"
 

@@ -12,4 +12,5 @@ sealed class Screen(
     object SearchScreen: Screen("search_screen")
     object AddInfoScreen: Screen("add_info_screen")
     object OrderScreen: Screen("order_screen")
+    object OrderSuccessfulScreen: Screen("order_successful_screen")
 }

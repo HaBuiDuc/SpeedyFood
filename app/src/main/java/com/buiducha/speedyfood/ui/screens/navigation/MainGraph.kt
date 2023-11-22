@@ -10,6 +10,7 @@ import com.buiducha.speedyfood.ui.screens.detail_screen.DetailScreen
 import com.buiducha.speedyfood.ui.screens.food_by_category.FoodByCategory
 import com.buiducha.speedyfood.ui.screens.home_screen.HomeScreen
 import com.buiducha.speedyfood.ui.screens.order_screen.OrderScreen
+import com.buiducha.speedyfood.ui.screens.order_successful_screen.OrderSuccessful
 import com.buiducha.speedyfood.ui.screens.search_screen.SearchScreen
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.SelectedFoodViewModel
@@ -72,6 +73,13 @@ fun MainGraph(
         ) {
             OrderScreen(
                 locationViewModel = locationViewModel,
+                navController = navHostController
+            )
+        }
+        composable(
+            route = Screen.OrderSuccessfulScreen.route
+        ) {
+            OrderSuccessful(
                 navController = navHostController
             )
         }

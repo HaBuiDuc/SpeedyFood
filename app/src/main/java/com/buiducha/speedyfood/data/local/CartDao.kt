@@ -23,4 +23,7 @@ interface CartDao {
 
     @Query("SELECT * FROM cart_item_data WHERE foodId = (:foodId) AND toppingIds = :toppingIds")
     suspend fun getItemByFoodAndToppings(foodId: String, toppingIds: String): CartItemData?
+
+    @Query("DELETE FROM cart_item_data")
+    suspend fun deleteAll()
 }

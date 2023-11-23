@@ -26,6 +26,30 @@ class FireBaseRepository private constructor(context: Context) {
 
     fun getCurrentUser() = auth.currentUser
 
+    fun getOrder(
+        userId: String,
+        onGetOrderSuccess: (List<OrderData>) -> Unit,
+        onGetOrderFailure: () -> Unit
+    ) {
+        orderRef.orderByChild("userId").equalTo(userId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val dataList = mutableListOf<OrderData>()
+                snapshot.children.forEach { shot ->
+                    val data = shot.getValue(OrderData::class.java)
+                    data?.let {
+                        dataList += it
+                    }
+                    Log.d(TAG, data.toString())
+                }
+                onGetOrderSuccess(dataList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        })
+    }
+
     fun placeOrder(
         orderData: OrderData,
         onOrderSuccess: () -> Unit,

@@ -12,6 +12,8 @@ import com.buiducha.speedyfood.ui.screens.home_screen.HomeScreen
 import com.buiducha.speedyfood.ui.screens.order_screen.OrderScreen
 import com.buiducha.speedyfood.ui.screens.order_successful_screen.OrderSuccessful
 import com.buiducha.speedyfood.ui.screens.search_screen.SearchScreen
+import com.buiducha.speedyfood.ui.screens.settings_screen.SettingsScreen
+import com.buiducha.speedyfood.ui.screens.user_order_screen.UserOrderScreen
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.SelectedFoodViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.LocationViewModel
@@ -25,10 +27,18 @@ fun MainGraph(
     val selectedFoodViewModel: SelectedFoodViewModel = viewModel()
     NavHost(
         navController = navHostController,
-        startDestination = Screen.HomeScreen.route
+        startDestination = BottomBarScreen.HomeScreen.route
     ) {
+//        composable(
+//            route = Screen.MainScreen.route
+//        ) {
+//            MainScreen(
+//                locationViewModel = locationViewModel,
+//                foodViewModel = foodViewModel
+//            )
+//        }
         composable(
-            route = Screen.HomeScreen.route
+            route = BottomBarScreen.HomeScreen.route
         ) {
             HomeScreen(
                 navController = navHostController,
@@ -82,6 +92,21 @@ fun MainGraph(
             OrderSuccessful(
                 navController = navHostController
             )
+        }
+
+
+
+        composable(
+            route = BottomBarScreen.UserOrderScreen.route
+        ) {
+            UserOrderScreen(
+
+            )
+        }
+        composable(
+            route = BottomBarScreen.SettingsScreen.route
+        ) {
+            SettingsScreen()
         }
     }
 }

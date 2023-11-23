@@ -76,6 +76,10 @@ fun FoodSearchView(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
+            .clip(RoundedCornerShape(30.dp))
+            .clickable {
+                onSearchToggle()
+            }
             .border(
                 0.8.dp,
                 Color.LightGray,
@@ -83,9 +87,7 @@ fun FoodSearchView(
             )
             .height(48.dp)
             .padding(horizontal = 8.dp)
-            .clickable {
-                onSearchToggle()
-            }
+
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically

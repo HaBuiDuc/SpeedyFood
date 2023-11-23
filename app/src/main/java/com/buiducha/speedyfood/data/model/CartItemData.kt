@@ -11,9 +11,9 @@ import java.util.UUID
 data class CartItemData(
     @PrimaryKey
     val cartItemId: String = UUID.randomUUID().mostSignificantBits.toString(),
-    val userId: String,
-    val foodId: String,
-    val price: Double,
-    val quantity: Int,
+    val userId: String = "",
+    val foodId: String = "",
+    val price: Double = 0.0,
+    val quantity: Int = 0,
     val toppingIds: List<String> = emptyList()
 )

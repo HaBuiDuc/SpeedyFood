@@ -14,10 +14,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.buiducha.speedyfood.ui.screens.navigation.MainGraph
+import com.buiducha.speedyfood.ui.screens.root_screen.MainScreen
 import com.buiducha.speedyfood.ui.theme.SpeedyFoodTheme
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.LocationViewModel
@@ -55,10 +54,14 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     navHostController = rememberNavController()
-                    MainGraph(
-                        navHostController = navHostController,
+//                    MainGraph(
+//                        navHostController = navHostController,
+//                        locationViewModel = locationViewModel,
+//                        foodViewModel = foodViewModel
+//                    )
+                    MainScreen(
                         locationViewModel = locationViewModel,
-                        foodViewModel = foodViewModel
+                        foodViewModel = foodViewModel,
                     )
                 }
             }

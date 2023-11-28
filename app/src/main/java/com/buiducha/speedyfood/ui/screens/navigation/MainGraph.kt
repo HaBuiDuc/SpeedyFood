@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.buiducha.speedyfood.ui.screens.cart_screen.CartScreen
 import com.buiducha.speedyfood.ui.screens.detail_screen.DetailScreen
-import com.buiducha.speedyfood.ui.screens.food_by_category.FoodByCategory
+import com.buiducha.speedyfood.ui.screens.food_by_category.FoodByCategoryScreen
 import com.buiducha.speedyfood.ui.screens.home_screen.HomeScreen
 import com.buiducha.speedyfood.ui.screens.order_screen.OrderScreen
 import com.buiducha.speedyfood.ui.screens.order_successful_screen.OrderSuccessful
@@ -16,6 +16,7 @@ import com.buiducha.speedyfood.ui.screens.settings.change_password_screen.Change
 import com.buiducha.speedyfood.ui.screens.settings.edit_profile_screen.EditProfileScreen
 import com.buiducha.speedyfood.ui.screens.settings.settings_screen.SettingsScreen
 import com.buiducha.speedyfood.ui.screens.user_order_screen.UserOrderScreen
+import com.buiducha.speedyfood.viewmodel.shared_viewmodel.CategoryViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.SelectedFoodViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.LocationViewModel
@@ -27,6 +28,7 @@ fun MainGraph(
     foodViewModel: FoodViewModel
 ) {
     val selectedFoodViewModel: SelectedFoodViewModel = viewModel()
+    val categoryViewModel: CategoryViewModel = viewModel()
     NavHost(
         navController = navHostController,
         startDestination = BottomBarScreen.HomeScreen.route
@@ -38,7 +40,8 @@ fun MainGraph(
                 navController = navHostController,
                 selectedFoodViewModel = selectedFoodViewModel,
                 locationViewModel = locationViewModel,
-                foodViewModel = foodViewModel
+                foodViewModel = foodViewModel,
+                categoryViewModel = categoryViewModel
             )
         }
         composable(
@@ -52,8 +55,11 @@ fun MainGraph(
         composable(
             route = Screen.FoodByCategory.route
         ) {
-            FoodByCategory(
-                navController = navHostController
+            FoodByCategoryScreen(
+                navController = navHostController,
+                foodViewModel = foodViewModel,
+                selectedFoodViewModel = selectedFoodViewModel,
+                categoryViewModel = categoryViewModel
             )
         }
         composable(

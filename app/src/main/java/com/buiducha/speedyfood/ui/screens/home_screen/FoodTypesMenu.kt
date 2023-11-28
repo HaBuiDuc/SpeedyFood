@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,12 +31,13 @@ import com.buiducha.speedyfood.ui.theme.TextNormalStyle
 @Preview
 @Composable
 private fun FoodTypesMenuPreview() {
-    FoodTypesMenu()
+    FoodTypesMenu() {}
 }
 
 @Composable
 fun FoodTypesMenu(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCategorySelect: (Int) -> Unit
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -44,7 +46,8 @@ fun FoodTypesMenu(
         items(FoodTypes.values()) { foodType ->
             FoodMenuItem(
                 foodTypes = foodType,
-                isActive = false
+                isActive = false,
+                onCategorySelect = onCategorySelect
             )
         }
     }
@@ -53,16 +56,18 @@ fun FoodTypesMenu(
 @Preview
 @Composable
 private fun FoodMenuItemPreview() {
-    FoodMenuItem(foodTypes = FoodTypes.FastFood, isActive = true)
+    FoodMenuItem(foodTypes = FoodTypes.FastFood, isActive = true) {}
 }
 
 @Composable
 fun FoodMenuItem(
     foodTypes: FoodTypes,
-    isActive: Boolean
+    isActive: Boolean,
+    onCategorySelect: (Int) -> Unit
 ) {
     val boxSize = if (isActive) 64.dp else 60.dp
     val bgColor = if (isActive) Orange else LightGray
+    val context = LocalContext.current
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -70,7 +75,9 @@ fun FoodMenuItem(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .clip(shape = CircleShape)
-                .clickable {  }
+                .clickable {
+                    onCategorySelect(foodTypes.label)
+                }
                 .background(
                     color = bgColor,
                 )

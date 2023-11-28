@@ -5,13 +5,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.buiducha.speedyfood.data.repository.FireBaseRepository
 import com.buiducha.speedyfood.ui.states.HomeState
+import com.buiducha.speedyfood.viewmodel.shared_viewmodel.CategoryViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val foodViewModel: FoodViewModel) : ViewModel() {
+class HomeViewModel(
+    private val foodViewModel: FoodViewModel,
+) : ViewModel() {
     private val fireBaseRepository = FireBaseRepository.get()
     private val _homeState = MutableStateFlow(HomeState())
     val homeState: StateFlow<HomeState> = _homeState.asStateFlow()
@@ -32,6 +35,7 @@ class HomeViewModel(private val foodViewModel: FoodViewModel) : ViewModel() {
             }
         }
     }
+
 
     companion object {
         const val TAG = "HomeViewModel"

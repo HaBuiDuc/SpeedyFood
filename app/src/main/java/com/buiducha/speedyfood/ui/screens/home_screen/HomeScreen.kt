@@ -30,6 +30,7 @@ import com.buiducha.speedyfood.ui.screens.shareds.HorizontalLine
 import com.buiducha.speedyfood.ui.theme.Ivory
 import com.buiducha.speedyfood.utils.getDetailAddress
 import com.buiducha.speedyfood.viewmodel.HomeViewModel
+import com.buiducha.speedyfood.viewmodel.shared_viewmodel.CategoryViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.LocationViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.SelectedFoodViewModel
@@ -46,21 +47,21 @@ fun HomeScreen(
     selectedFoodViewModel: SelectedFoodViewModel,
     locationViewModel: LocationViewModel,
     foodViewModel: FoodViewModel,
+    categoryViewModel: CategoryViewModel,
     homeViewModel: HomeViewModel = viewModel {HomeViewModel(foodViewModel)}
 ) {
     val homeState by homeViewModel.homeState.collectAsState()
-    var selectedItem by remember { mutableIntStateOf(0) }
-    val items = listOf("Songs", "Artists", "Playlists")
     val focusManager = LocalFocusManager.current
+
+    fun onCategoryNavigate(labelId: Int) {
+        navController.navigate(Screen.FoodByCategory.route)
+        categoryViewModel.setLabel(labelId)
+    }
 
     fun onDetailNavigate(foodData: FoodData) {
         navController.navigate(Screen.DetailScreen.route)
         selectedFoodViewModel.foodUpdate(foodData)
     }
-
-//    val location by remember {
-//        mutableStateOf("")
-//    }
 
     val location by locationViewModel.currentLocation.collectAsState()
     val scope = rememberCoroutineScope()
@@ -99,6 +100,9 @@ fun HomeScreen(
                 }
         ) {
             FoodTypesMenu(
+                onCategorySelect = {label ->
+                    onCategoryNavigate(label)
+                },
                 modifier = Modifier
                     .padding(16.dp)
             )
@@ -108,8 +112,6 @@ fun HomeScreen(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
             ) {food ->
-//                navController.navigate(Screen.DetailScreen.route)
-//                foodViewModel.foodUpdate(food)
                 onDetailNavigate(food)
             }
             Spacer(modifier = Modifier.height(16.dp))

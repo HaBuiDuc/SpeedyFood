@@ -1,12 +1,15 @@
 package com.buiducha.speedyfood.viewmodel.shared_viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.buiducha.speedyfood.data.model.FoodData
-import com.buiducha.speedyfood.data.repository.FireBaseRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class CategoryViewModel : ViewModel() {
-    private val fireBaseRepository = FireBaseRepository.get()
-    private val _foodDataList = MutableStateFlow<List<FoodData>>(emptyList())
+    private val _labelId = MutableStateFlow(0)
+    val labelId: StateFlow<Int> = _labelId.asStateFlow()
 
+    fun setLabel(label: Int) {
+        _labelId.value = label
+    }
 }

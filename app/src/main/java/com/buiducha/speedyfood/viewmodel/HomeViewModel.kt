@@ -23,6 +23,7 @@ class HomeViewModel(private val foodViewModel: FoodViewModel) : ViewModel() {
 //            )
 //            Log.d(TAG, it.toString())
 //        }
+        fireBaseRepository.saveLoginToken()
         viewModelScope.launch {
             foodViewModel.foodDataList.collect {
                 _homeState.value = _homeState.value.copy(

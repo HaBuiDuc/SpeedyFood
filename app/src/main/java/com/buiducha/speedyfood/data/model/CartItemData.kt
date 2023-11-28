@@ -3,7 +3,7 @@ package com.buiducha.speedyfood.data.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.buiducha.speedyfood.data.local.StringListConverter
+import com.buiducha.speedyfood.data.local.database.StringListConverter
 import java.util.UUID
 
 @Entity("cart_item_data")

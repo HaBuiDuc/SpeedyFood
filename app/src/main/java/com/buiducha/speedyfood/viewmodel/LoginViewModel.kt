@@ -7,9 +7,27 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.buiducha.speedyfood.MainActivity
 import com.buiducha.speedyfood.data.repository.FireBaseRepository
+import com.buiducha.speedyfood.utils.startMainActivity
 
 class LoginViewModel : ViewModel() {
     private val fireBaseRepository = FireBaseRepository.get()
+
+    init {
+
+    }
+
+    fun authStateCheck(
+        onUserExists: () -> Unit,
+        onUserNotExists: () -> Unit
+    ) {
+        if (fireBaseRepository.getCurrentUser() != null) {
+            Log.d(TAG, "Auto login without input: ")
+            onLoginSuccess(
+                onUserExists = onUserExists,
+                onUserNotExists = onUserNotExists
+            )
+        }
+    }
 
     fun userLogin(
         activity: Activity,

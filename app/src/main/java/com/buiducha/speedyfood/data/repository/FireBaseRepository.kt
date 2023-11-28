@@ -7,6 +7,7 @@ import com.buiducha.speedyfood.data.model.FoodData
 import com.buiducha.speedyfood.data.model.OptionalItemData
 import com.buiducha.speedyfood.data.model.OrderData
 import com.buiducha.speedyfood.data.model.UserData
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -46,7 +47,6 @@ class FireBaseRepository private constructor(context: Context) {
 
             override fun onCancelled(error: DatabaseError) {
             }
-
         })
     }
 
@@ -68,13 +68,21 @@ class FireBaseRepository private constructor(context: Context) {
             }
     }
 
-    fun getUserInfo(userId: String) {
+    fun getUserInfo(
+        userId: String,
+        onGetInfoSuccess: (UserData) -> Unit,
+        onGetInfoFailure: () -> Unit
+    ) {
         usersRef.orderByChild("id").equalTo(userId).addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-
+                snapshot.children.forEach { user ->
+                    val data = user.getValue(UserData::class.java)
+                    data?.let(onGetInfoSuccess)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
+                onGetInfoFailure()
             }
 
         })
@@ -85,7 +93,7 @@ class FireBaseRepository private constructor(context: Context) {
         onUserExists: () -> Unit,
         onUserNotExists: () -> Unit
     ) {
-        usersRef.orderByChild("id").equalTo(userId).addListenerForSingleValueEvent(object : ValueEventListener{
+        usersRef.orderByChild("id").equalTo(userId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Log.d(TAG, snapshot.value.toString())
                 if (snapshot.exists()) {
@@ -99,6 +107,29 @@ class FireBaseRepository private constructor(context: Context) {
 
             override fun onCancelled(error: DatabaseError) {
 
+            }
+
+        })
+    }
+
+    fun updateUserInfo(
+        userData: UserData,
+    ) {
+        usersRef.orderByChild("id").equalTo(auth.currentUser?.uid).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach { shot ->
+                    val key = shot.key
+                    key?.let {
+                        usersRef.child(key).setValue(userData).addOnCompleteListener {
+                            Log.d(TAG, "updateUserInfo: ")
+                        }
+                        Log.d(TAG, key)
+                    }
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
             }
 
         })
@@ -119,6 +150,55 @@ class FireBaseRepository private constructor(context: Context) {
             .addOnFailureListener {e ->
                 Log.e(TAG, "add user failure", e)
                 onAddFailure()
+            }
+    }
+
+    fun changePassword(
+        oldPassword: String,
+        newPassword: String,
+        onChangePasswordSuccess: () -> Unit,
+        onChangePasswordFailure: (String) -> Unit,
+    ) {
+        val credential = EmailAuthProvider.getCredential(
+            auth.currentUser?.email ?: "",
+            oldPassword
+        )
+
+        auth.currentUser?.reauthenticate(credential)
+            ?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // User has been reauthenticated successfully
+                    // Call updatePassword() method to update the password
+                    updatePassword(
+                        newPassword = newPassword,
+                        onChangePasswordSuccess = onChangePasswordSuccess,
+                        onChangePasswordFailure = onChangePasswordFailure
+                    )
+                    Log.d(TAG, "changePassword: true")
+                } else {
+                    // Handle the error
+                    onChangePasswordFailure(OLD_PASSWORD_INVALID)
+                    Log.d(TAG, "changePassword: false")
+                }
+            }
+    }
+
+    private fun updatePassword(
+        newPassword: String,
+        onChangePasswordSuccess: () -> Unit,
+        onChangePasswordFailure: (String) -> Unit
+    ) {
+        auth.currentUser?.updatePassword(newPassword)
+            ?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Password updated successfully
+                    onChangePasswordSuccess()
+                    Log.d(TAG, "update password successfully")
+                } else {
+                    // Handle the error
+                    onChangePasswordFailure(PASSWORD_CHANGE_FAILURE)
+                    Log.d(TAG, "update password failure")
+                }
             }
     }
 
@@ -144,6 +224,32 @@ class FireBaseRepository private constructor(context: Context) {
             .addOnFailureListener {
                 onCreateFailure()
             }
+    }
+
+    fun userLogout(
+        onLogout: () -> Unit
+    ) {
+        auth.signOut()
+        auth.addAuthStateListener {
+            if (auth.currentUser == null) {
+                onLogout()
+            }
+        }
+    }
+
+    fun saveLoginToken() {
+        auth.currentUser?.getIdToken(true)?.addOnCompleteListener {tokenTask ->
+            if (tokenTask.isSuccessful) {
+                val tokenResult = tokenTask.result
+                val loginToken = tokenResult.token
+                loginToken?.let {
+                    Log.d(TAG, "autoLogin: $it")
+
+                }
+            } else {
+
+            }
+        }
     }
 
     fun userLogin(
@@ -251,5 +357,10 @@ class FireBaseRepository private constructor(context: Context) {
         fun get(): FireBaseRepository {
             return INSTANCE ?: throw  IllegalStateException("repo must be init")
         }
+
+
+
+        const val OLD_PASSWORD_INVALID = "old_password_invalid"
+        const val PASSWORD_CHANGE_FAILURE = "password_change_failure"
     }
 }

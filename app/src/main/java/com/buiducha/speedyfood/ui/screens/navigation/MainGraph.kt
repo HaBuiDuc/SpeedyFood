@@ -12,7 +12,9 @@ import com.buiducha.speedyfood.ui.screens.home_screen.HomeScreen
 import com.buiducha.speedyfood.ui.screens.order_screen.OrderScreen
 import com.buiducha.speedyfood.ui.screens.order_successful_screen.OrderSuccessful
 import com.buiducha.speedyfood.ui.screens.search_screen.SearchScreen
-import com.buiducha.speedyfood.ui.screens.settings_screen.SettingsScreen
+import com.buiducha.speedyfood.ui.screens.settings.change_password_screen.ChangePasswordScreen
+import com.buiducha.speedyfood.ui.screens.settings.edit_profile_screen.EditProfileScreen
+import com.buiducha.speedyfood.ui.screens.settings.settings_screen.SettingsScreen
 import com.buiducha.speedyfood.ui.screens.user_order_screen.UserOrderScreen
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.SelectedFoodViewModel
@@ -29,14 +31,6 @@ fun MainGraph(
         navController = navHostController,
         startDestination = BottomBarScreen.HomeScreen.route
     ) {
-//        composable(
-//            route = Screen.MainScreen.route
-//        ) {
-//            MainScreen(
-//                locationViewModel = locationViewModel,
-//                foodViewModel = foodViewModel
-//            )
-//        }
         composable(
             route = BottomBarScreen.HomeScreen.route
         ) {
@@ -99,14 +93,29 @@ fun MainGraph(
         composable(
             route = BottomBarScreen.UserOrderScreen.route
         ) {
-            UserOrderScreen(
-
-            )
+            UserOrderScreen()
         }
         composable(
             route = BottomBarScreen.SettingsScreen.route
         ) {
-            SettingsScreen()
+            SettingsScreen(
+                navController = navHostController
+            )
+        }
+
+        composable(
+            route = Screen.ChangePasswordScreen.route
+        ) {
+            ChangePasswordScreen(
+                navController = navHostController
+            )
+        }
+        composable(
+            route = Screen.EditProfileScreen.route
+        ) {
+            EditProfileScreen(
+                navController = navHostController
+            )
         }
     }
 }

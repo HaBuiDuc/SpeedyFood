@@ -2,7 +2,7 @@ package com.buiducha.speedyfood.data.repository
 
 import android.content.Context
 import androidx.room.Room
-import com.buiducha.speedyfood.data.local.CartDatabase
+import com.buiducha.speedyfood.data.local.database.CartDatabase
 import com.buiducha.speedyfood.data.model.CartItemData
 import kotlinx.coroutines.flow.Flow
 

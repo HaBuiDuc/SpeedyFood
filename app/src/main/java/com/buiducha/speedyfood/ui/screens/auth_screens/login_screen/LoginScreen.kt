@@ -74,6 +74,15 @@ fun LoginScreen(
     navController: NavController,
     loginViewModel: LoginViewModel = viewModel()
 ) {
+    val context = LocalContext.current
+    loginViewModel.authStateCheck(
+        onUserExists = {
+            startMainActivity(context)
+        },
+        onUserNotExists = {
+            navController.navigate(Screen.AddInfoScreen.route)
+        }
+    )
     var emailOrPhone by remember {
         mutableStateOf("")
     }
@@ -83,7 +92,6 @@ fun LoginScreen(
     var isPasswordVisible by remember {
         mutableStateOf(false)
     }
-    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val activity = LocalContext.current as Activity
     val scope = rememberCoroutineScope()
@@ -201,8 +209,6 @@ fun LoginScreen(
                             email = emailOrPhone,
                             password = password,
                             onLoginSuccess = {
-//                                loginViewModel.startMainActivity(context = context)
-//                                navController.navigate(Screen.AddInfoScreen.route)
                                 loginViewModel.onLoginSuccess(
                                     onUserExists = {
                                         startMainActivity(context = context)

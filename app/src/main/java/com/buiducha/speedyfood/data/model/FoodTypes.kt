@@ -32,5 +32,4 @@ enum class FoodTypes(
         label = R.string.snack,
         icon = R.drawable.snack
     ),
-
 }

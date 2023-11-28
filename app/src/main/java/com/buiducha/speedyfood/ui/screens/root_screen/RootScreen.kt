@@ -5,20 +5,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.buiducha.speedyfood.ui.screens.navigation.BottomBarScreen
 import com.buiducha.speedyfood.ui.screens.navigation.MainGraph
+import com.buiducha.speedyfood.ui.theme.PrimaryColor
+import com.buiducha.speedyfood.utils.advancedShadow
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.LocationViewModel
 
@@ -28,18 +30,11 @@ fun MainScreen(
     foodViewModel: FoodViewModel,
 ) {
     val navController = rememberNavController()
-    var selectedScreen by remember {
-        mutableStateOf(BottomBarScreen.HomeScreen as BottomBarScreen)
-    }
 
     Scaffold(
         bottomBar = {
             BottomBar(
                 navController = navController,
-                selectedScreen = selectedScreen,
-                onSelectedScreen = {screen ->
-                    selectedScreen = screen
-                }
             )
         }
     ) {paddingValues ->
@@ -47,22 +42,6 @@ fun MainScreen(
             modifier = Modifier
                 .padding(paddingValues)
         ) {
-//            when (selectedScreen) {
-//                BottomBarScreen.HomeScreen -> {
-//
-//                }
-//                BottomBarScreen.SettingsScreen -> {
-//
-//                }
-//                BottomBarScreen.UserOrderScreen -> {
-//
-//                }
-//            }
-//            BottomNavGraph(
-//                locationViewModel = locationViewModel,
-//                foodViewModel = foodViewModel,
-//                navController = navController
-//            )
             MainGraph(
                 navHostController = navController,
                 locationViewModel = locationViewModel,
@@ -75,8 +54,6 @@ fun MainScreen(
 @Composable
 private fun BottomBar(
     navController: NavHostController,
-    selectedScreen: BottomBarScreen,
-    onSelectedScreen: (BottomBarScreen) -> Unit
 ) {
     val screens = listOf(
         BottomBarScreen.HomeScreen,
@@ -89,7 +66,20 @@ private fun BottomBar(
     val bottomBarDestination = screens.any { it.route == currentDestination?.route }
 
     if (bottomBarDestination) {
-        NavigationBar {
+        NavigationBar(
+            containerColor = Color.White,
+            modifier = Modifier
+                .advancedShadow(
+                    color = Color.Gray,
+                    alpha = 0.2f,
+                    cornersRadius = 16.dp,
+                    shadowBlurRadius = 8.dp,
+                    offsetX = 1.dp,
+                    offsetY = (-6).dp
+                )
+//                .padding(16.dp)
+//                .clip(RoundedCornerShape(16))
+        ) {
             screens.forEach { screen ->
                 NavigationBarItem(
                     selected = currentDestination?.hierarchy?.any {
@@ -97,7 +87,6 @@ private fun BottomBar(
                     } == true,
                     onClick = {
                         navController.navigate(screen.route)
-//                    onSelectedScreen(screen)
                     },
                     icon = {
                         Icon(
@@ -109,11 +98,17 @@ private fun BottomBar(
                         Text(
                             text = screen.title
                         )
-                    }
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = PrimaryColor,
+                        selectedTextColor = PrimaryColor,
+                        indicatorColor = Color.White
+                    ),
+                    modifier = Modifier
+//                        .clip(CircleShape)
+                        .padding(3.dp)
                 )
             }
         }
     }
-
-
 }

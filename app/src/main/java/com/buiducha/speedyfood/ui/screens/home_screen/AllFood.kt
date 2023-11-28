@@ -16,7 +16,7 @@ import com.buiducha.speedyfood.ui.screens.shareds.FoodItemHor
 import com.buiducha.speedyfood.ui.theme.TextSemiBoldStyle
 
 @Composable
-fun NearbyFood(
+fun AllFood(
     foodList: List<FoodData>,
     modifier: Modifier = Modifier,
     onFoodSelect: (FoodData) -> Unit

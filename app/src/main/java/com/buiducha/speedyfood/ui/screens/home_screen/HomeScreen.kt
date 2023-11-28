@@ -117,7 +117,7 @@ fun HomeScreen(
                 modifier = Modifier
                     .padding(vertical = 16.dp)
             )
-            NearbyFood(
+            AllFood(
                 foodList = homeState.foodList,
                 modifier = Modifier
                     .padding(

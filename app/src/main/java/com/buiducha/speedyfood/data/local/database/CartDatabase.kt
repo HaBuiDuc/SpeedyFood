@@ -1,4 +1,4 @@
-package com.buiducha.speedyfood.data.local
+package com.buiducha.speedyfood.data.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

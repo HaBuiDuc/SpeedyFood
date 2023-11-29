@@ -43,6 +43,7 @@ import com.buiducha.speedyfood.data.repository.FireBaseRepository.Companion.OLD_
 import com.buiducha.speedyfood.data.repository.FireBaseRepository.Companion.PASSWORD_CHANGE_FAILURE
 import com.buiducha.speedyfood.ui.screens.shareds.SimpleTopBar
 import com.buiducha.speedyfood.ui.theme.MarianBlue
+import com.buiducha.speedyfood.ui.theme.PrimaryColor
 import com.buiducha.speedyfood.viewmodel.settings.ChangePasswordViewModel
 
 @Composable
@@ -117,7 +118,7 @@ fun ChangePasswordScreen(
             Button(
                 shape = RoundedCornerShape(20),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MarianBlue
+                    containerColor = PrimaryColor
                 ),
                 onClick = {
                     changePasswordViewModel.changePassword(
@@ -177,10 +178,13 @@ fun PasswordTextField(
                     isValueVisible = !isValueVisible
                 }
             ) {
-                Icon(
-                    imageVector = if (isValueVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                    contentDescription = null,
-                )
+                if (value.isNotEmpty()) {
+                    Icon(
+                        imageVector = if (isValueVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                        contentDescription = null,
+                    )
+                }
+
             }
         },
         shape = RoundedCornerShape(10.dp),

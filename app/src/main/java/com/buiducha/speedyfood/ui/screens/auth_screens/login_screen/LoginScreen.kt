@@ -3,6 +3,7 @@ package com.buiducha.speedyfood.ui.screens.auth_screens.login_screen
 import android.app.Activity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -53,9 +54,10 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.buiducha.speedyfood.R
-import com.buiducha.speedyfood.ui.screens.navigation.Screen
+import com.buiducha.speedyfood.ui.navigation.Screen
 import com.buiducha.speedyfood.ui.theme.AuthenticTextFieldColor
 import com.buiducha.speedyfood.ui.theme.DarkGreen
+import com.buiducha.speedyfood.ui.theme.PrimaryColor
 import com.buiducha.speedyfood.ui.theme.TextBoldStyle
 import com.buiducha.speedyfood.ui.theme.TextSemiBoldStyle
 import com.buiducha.speedyfood.utils.startMainActivity
@@ -200,7 +202,7 @@ fun LoginScreen(
             FilledTonalButton(
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = DarkGreen
+                    containerColor = PrimaryColor
                 ),
                 onClick = {
                     if (loginViewModel.isValueValid(emailOrPhone, password)) {
@@ -240,6 +242,23 @@ fun LoginScreen(
                     fontSize = 20.sp
                 )
             }
+            Row(
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = stringResource(id = R.string.forgot_password),
+                    color = PrimaryColor,
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(Screen.ForgotPasswordScreen.route)
+                        }
+                        .padding(
+                            vertical = 8.dp
+                        )
+                )
+            }
             val composition by rememberLottieComposition(
                 spec = LottieCompositionSpec.RawRes(R.raw.store_lottie)
             )
@@ -275,7 +294,7 @@ fun LoginScreen(
                 Text(
                     text = stringResource(id = R.string.sign_up),
                     fontSize = 16.sp,
-                    color = DarkGreen,
+                    color = PrimaryColor,
                     modifier = Modifier
                         .clickable {
                             navController.popBackStack()

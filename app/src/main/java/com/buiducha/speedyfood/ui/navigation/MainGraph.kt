@@ -1,10 +1,11 @@
-package com.buiducha.speedyfood.ui.screens.navigation
+package com.buiducha.speedyfood.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.buiducha.speedyfood.ui.screens.auth_screens.forgot_password_screen.ForgotPasswordScreen
 import com.buiducha.speedyfood.ui.screens.cart_screen.CartScreen
 import com.buiducha.speedyfood.ui.screens.detail_screen.DetailScreen
 import com.buiducha.speedyfood.ui.screens.food_by_category.FoodByCategoryScreen
@@ -93,9 +94,6 @@ fun MainGraph(
                 navController = navHostController
             )
         }
-
-
-
         composable(
             route = BottomBarScreen.UserOrderScreen.route
         ) {
@@ -108,7 +106,6 @@ fun MainGraph(
                 navController = navHostController
             )
         }
-
         composable(
             route = Screen.ChangePasswordScreen.route
         ) {
@@ -123,5 +120,6 @@ fun MainGraph(
                 navController = navHostController
             )
         }
+
     }
 }

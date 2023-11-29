@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.buiducha.speedyfood.R
 import com.buiducha.speedyfood.ui.theme.Orange
+import com.buiducha.speedyfood.ui.theme.PrimaryColor
 
 @Preview
 @Composable
@@ -62,7 +63,7 @@ fun OrderScreenBottomBar(
             },
             shape = RoundedCornerShape(8),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Orange
+                containerColor = PrimaryColor
             ),
             modifier = Modifier
                 .fillMaxWidth()

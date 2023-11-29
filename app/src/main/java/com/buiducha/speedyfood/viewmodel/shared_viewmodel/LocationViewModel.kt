@@ -18,11 +18,6 @@ class LocationViewModel : ViewModel() {
     val currentLocation: StateFlow<Location?> = _currentLocation.asStateFlow()
     val geocoding: StateFlow<String> = _geocoding.asStateFlow()
 
-
-    init {
-
-    }
-
     fun getLocation(
         context: Context
     ) {

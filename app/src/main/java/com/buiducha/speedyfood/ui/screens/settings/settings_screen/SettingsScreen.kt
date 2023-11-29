@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.buiducha.speedyfood.R
-import com.buiducha.speedyfood.ui.screens.navigation.Screen
+import com.buiducha.speedyfood.ui.navigation.Screen
 import com.buiducha.speedyfood.viewmodel.settings.SettingsViewModel
 
 @Composable

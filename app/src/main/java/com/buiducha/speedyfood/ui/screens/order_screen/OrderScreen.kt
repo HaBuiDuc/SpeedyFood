@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.buiducha.speedyfood.ui.screens.navigation.Screen
+import com.buiducha.speedyfood.ui.navigation.Screen
 import com.buiducha.speedyfood.ui.screens.shareds.HorizontalLine
 import com.buiducha.speedyfood.ui.theme.Shade
 import com.buiducha.speedyfood.viewmodel.food_order.OrderViewModel

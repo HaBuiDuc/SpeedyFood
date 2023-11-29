@@ -17,8 +17,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.buiducha.speedyfood.R
-import com.buiducha.speedyfood.ui.screens.navigation.Screen
+import com.buiducha.speedyfood.ui.navigation.Screen
 import com.buiducha.speedyfood.ui.theme.Orange
+import com.buiducha.speedyfood.ui.theme.PrimaryColor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -43,7 +44,7 @@ fun OrderSuccessful(
             fontSize = 24.sp,
             fontWeight = FontWeight.SemiBold,
             textAlign = TextAlign.Center,
-            color = Orange
+            color = PrimaryColor
         )
     }
     LaunchedEffect(key1 = "my_key", block = {

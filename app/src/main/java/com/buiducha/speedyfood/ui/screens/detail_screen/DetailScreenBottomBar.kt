@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.buiducha.speedyfood.R
 import com.buiducha.speedyfood.ui.theme.Gold
+import com.buiducha.speedyfood.ui.theme.PrimaryColor
 
 @Preview
 @Composable
@@ -83,7 +84,7 @@ fun DetailScreenBottomBar(
                 bottomEnd = 18.dp
             ),
             colors = ButtonDefaults.buttonColors(
-//                containerColor = Color.Black,
+                containerColor = PrimaryColor,
 //                contentColor = Color.White
             ),
             contentPadding = PaddingValues(

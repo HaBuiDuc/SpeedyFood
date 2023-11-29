@@ -25,7 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.buiducha.speedyfood.R
-import com.buiducha.speedyfood.ui.screens.navigation.Screen
+import com.buiducha.speedyfood.ui.navigation.Screen
 import com.buiducha.speedyfood.ui.theme.Ivory
 import com.buiducha.speedyfood.ui.theme.TextBoldStyle
 import com.buiducha.speedyfood.ui.theme.TextNormalStyle

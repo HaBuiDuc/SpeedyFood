@@ -17,8 +17,8 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.buiducha.speedyfood.ui.screens.navigation.BottomBarScreen
-import com.buiducha.speedyfood.ui.screens.navigation.MainGraph
+import com.buiducha.speedyfood.ui.navigation.BottomBarScreen
+import com.buiducha.speedyfood.ui.navigation.MainGraph
 import com.buiducha.speedyfood.ui.theme.PrimaryColor
 import com.buiducha.speedyfood.utils.advancedShadow
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel

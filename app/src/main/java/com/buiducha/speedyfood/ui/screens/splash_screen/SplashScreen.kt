@@ -24,7 +24,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.buiducha.speedyfood.R
-import com.buiducha.speedyfood.ui.screens.navigation.Screen
+import com.buiducha.speedyfood.ui.navigation.Screen
 import com.buiducha.speedyfood.ui.theme.Arima
 import com.buiducha.speedyfood.ui.theme.PrimaryColor
 import com.buiducha.speedyfood.ui.theme.SeoulNamSan

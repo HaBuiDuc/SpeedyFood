@@ -53,9 +53,10 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.buiducha.speedyfood.R
-import com.buiducha.speedyfood.ui.screens.navigation.Screen
+import com.buiducha.speedyfood.ui.navigation.Screen
 import com.buiducha.speedyfood.ui.theme.AuthenticTextFieldColor
 import com.buiducha.speedyfood.ui.theme.DarkGreen
+import com.buiducha.speedyfood.ui.theme.PrimaryColor
 import com.buiducha.speedyfood.ui.theme.TextBoldStyle
 import com.buiducha.speedyfood.ui.theme.TextSemiBoldStyle
 import com.buiducha.speedyfood.viewmodel.authentication.RegisterViewModel
@@ -191,7 +192,7 @@ fun RegisterScreen(
             FilledTonalButton(
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = DarkGreen
+                    containerColor = PrimaryColor
                 ),
                 onClick = {
                     if (registerViewModel.isValueValid(emailOrPhone, password)) {
@@ -237,7 +238,7 @@ fun RegisterScreen(
                 Text(
                     text = stringResource(id = R.string.log_in),
                     fontSize = 16.sp,
-                    color = DarkGreen,
+                    color = PrimaryColor,
                     modifier = Modifier
                         .clickable {
                             navController.popBackStack()
@@ -247,7 +248,7 @@ fun RegisterScreen(
                 )
             }
             val composition by rememberLottieComposition(
-                spec = LottieCompositionSpec.RawRes(R.raw.lottie)
+                spec = LottieCompositionSpec.RawRes(R.raw.register_lottie)
             )
             val progress by animateLottieCompositionAsState(
                 // pass the composition created above

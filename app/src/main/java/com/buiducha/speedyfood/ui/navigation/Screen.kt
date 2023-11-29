@@ -1,4 +1,4 @@
-package com.buiducha.speedyfood.ui.screens.navigation
+package com.buiducha.speedyfood.ui.navigation
 
 sealed class Screen(
     val route: String
@@ -16,4 +16,5 @@ sealed class Screen(
     object EditProfileScreen: Screen("edit_profile_screen")
     object ChangePasswordScreen: Screen("change_password_screen")
     object SplashScreen: Screen("splash_screen")
+    object ForgotPasswordScreen: Screen("forgot_password_screen")
 }

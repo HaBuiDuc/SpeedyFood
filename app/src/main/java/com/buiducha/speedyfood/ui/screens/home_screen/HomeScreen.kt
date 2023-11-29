@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.buiducha.speedyfood.data.model.FoodData
-import com.buiducha.speedyfood.ui.screens.navigation.Screen
+import com.buiducha.speedyfood.ui.navigation.Screen
 import com.buiducha.speedyfood.ui.screens.shareds.HorizontalLine
 import com.buiducha.speedyfood.ui.theme.Ivory
 import com.buiducha.speedyfood.viewmodel.food_surf.HomeViewModel

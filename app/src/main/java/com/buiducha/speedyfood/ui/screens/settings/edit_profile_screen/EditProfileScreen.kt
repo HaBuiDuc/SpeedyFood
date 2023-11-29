@@ -50,6 +50,7 @@ import androidx.navigation.NavController
 import com.buiducha.speedyfood.R
 import com.buiducha.speedyfood.ui.screens.shareds.SimpleTopBar
 import com.buiducha.speedyfood.ui.theme.MarianBlue
+import com.buiducha.speedyfood.ui.theme.PrimaryColor
 import com.buiducha.speedyfood.viewmodel.settings.EditProfileViewModel
 
 @Composable
@@ -170,7 +171,7 @@ fun EditProfileScreen(
                     colors = TextFieldDefaults.colors(
                         disabledContainerColor = Color.White,
                         disabledIndicatorColor = Color.Black,
-                        disabledTextColor = Color.Black
+                        disabledTextColor = Color.Black,
                     ),
                     shape = RoundedCornerShape(10.dp),
                     enabled = false,
@@ -208,7 +209,7 @@ fun EditProfileScreen(
             Button(
                 shape = RoundedCornerShape(20),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MarianBlue
+                    containerColor = PrimaryColor
                 ),
                 onClick = {
                     editProfileViewModel.updateInfo()

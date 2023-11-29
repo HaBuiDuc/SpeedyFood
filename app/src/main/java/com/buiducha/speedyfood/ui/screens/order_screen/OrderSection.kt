@@ -27,6 +27,7 @@ import com.buiducha.speedyfood.data.model.FoodData
 import com.buiducha.speedyfood.ui.screens.shareds.HorizontalLine
 import com.buiducha.speedyfood.ui.theme.DarkGreen
 import com.buiducha.speedyfood.ui.theme.LightGray
+import com.buiducha.speedyfood.ui.theme.Orange
 import com.buiducha.speedyfood.ui.theme.Shade
 
 @Preview
@@ -61,9 +62,6 @@ fun OrderSection(
                 )
             }
         }
-//        repeat(4) {
-//            OrderSectionItem()
-//        }
         Spacer(modifier = Modifier.height(8.dp))
         HorizontalLine(
             weight = 2.0,
@@ -150,7 +148,7 @@ private fun OrderSectionItem(
                     text = "${cartItemData.quantity}x",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = DarkGreen
+                    color = Orange
                 )
             }
             Spacer(modifier = Modifier.width(8.dp))

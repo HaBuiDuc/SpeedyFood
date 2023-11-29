@@ -49,6 +49,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.buiducha.speedyfood.R
 import com.buiducha.speedyfood.ui.theme.MarianBlue
+import com.buiducha.speedyfood.ui.theme.PrimaryColor
 import com.buiducha.speedyfood.utils.startMainActivity
 import com.buiducha.speedyfood.viewmodel.authentication.AddInfoViewModel
 import kotlinx.coroutines.launch
@@ -192,7 +193,7 @@ fun AddUserInfo(
            Button(
                shape = RoundedCornerShape(20),
                colors = ButtonDefaults.buttonColors(
-                   containerColor = MarianBlue
+                   containerColor = PrimaryColor
                ),
                onClick = {
                    addInfoViewModel.addUserInfo(

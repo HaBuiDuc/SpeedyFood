@@ -26,14 +26,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.buiducha.speedyfood.R
-import com.buiducha.speedyfood.ui.theme.Orange
+import com.buiducha.speedyfood.ui.theme.PrimaryColor
 import com.buiducha.speedyfood.ui.theme.TextLightStyle
 
 @Preview
@@ -60,8 +59,8 @@ fun HomeTopBar(
                 .weight(1f)
         )
         Spacer(modifier = Modifier.width(8.dp))
-        SettingButton(
-            onSettingsClickListener = onSettingsClickListener
+        CartButton(
+            onCartClickListener = onSettingsClickListener
         )
     }
 }
@@ -128,18 +127,18 @@ fun FoodSearchView(
 }
 
 @Composable
-fun SettingButton(
-    onSettingsClickListener: () -> Unit
+fun CartButton(
+    onCartClickListener: () -> Unit
 ) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .clip(shape = CircleShape)
             .clickable {
-                onSettingsClickListener()
+                onCartClickListener()
             }
             .background(
-                color = Orange,
+                color = PrimaryColor,
             )
             .size(48.dp)
 

@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.buiducha.speedyfood.ui.screens.navigation.Screen
+import com.buiducha.speedyfood.ui.navigation.Screen
 import com.buiducha.speedyfood.viewmodel.food_surf.SearchViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.SelectedFoodViewModel

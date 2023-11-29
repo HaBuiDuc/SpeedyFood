@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.buiducha.speedyfood.ui.screens.navigation.Screen
+import com.buiducha.speedyfood.ui.navigation.Screen
 import com.buiducha.speedyfood.ui.screens.shareds.FoodItemHor
 import com.buiducha.speedyfood.ui.screens.shareds.SimpleTopBar
 import com.buiducha.speedyfood.viewmodel.food_surf.FoodByCategoryViewModel

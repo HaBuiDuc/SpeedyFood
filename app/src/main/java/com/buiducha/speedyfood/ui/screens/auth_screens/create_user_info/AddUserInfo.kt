@@ -48,10 +48,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.buiducha.speedyfood.R
-import com.buiducha.speedyfood.ui.screens.navigation.Screen
 import com.buiducha.speedyfood.ui.theme.MarianBlue
 import com.buiducha.speedyfood.utils.startMainActivity
-import com.buiducha.speedyfood.viewmodel.AddInfoViewModel
+import com.buiducha.speedyfood.viewmodel.authentication.AddInfoViewModel
 import kotlinx.coroutines.launch
 
 @Preview

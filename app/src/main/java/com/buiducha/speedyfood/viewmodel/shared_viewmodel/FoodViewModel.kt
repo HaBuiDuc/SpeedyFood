@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.buiducha.speedyfood.data.model.FoodData
 import com.buiducha.speedyfood.data.repository.FireBaseRepository
-import com.buiducha.speedyfood.viewmodel.HomeViewModel
+import com.buiducha.speedyfood.viewmodel.food_surf.HomeViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

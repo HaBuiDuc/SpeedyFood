@@ -15,4 +15,5 @@ sealed class Screen(
     object OrderSuccessfulScreen: Screen("order_successful_screen")
     object EditProfileScreen: Screen("edit_profile_screen")
     object ChangePasswordScreen: Screen("change_password_screen")
+    object SplashScreen: Screen("splash_screen")
 }

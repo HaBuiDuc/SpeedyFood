@@ -11,9 +11,9 @@ data class CartState(
     private val df = DecimalFormat("#.##")
 
     val totalPrice: Double
-        get() = df.format(cartItems.sumOf { cart -> cart.price * cart.quantity } + deliveryFee).toDouble()
+        get() = df.format(cartItems.sumOf { cart -> cart.price * cart.quantity } + deliveryFee).replace(",",".").toDouble()
     val subTotal: Double
-        get() = df.format(cartItems.sumOf { cart -> cart.price * cart.quantity }).toDouble()
+        get() = df.format(cartItems.sumOf { cart -> cart.price * cart.quantity }).replace(",",".").toDouble()
 
     val deliveryFee: Double
         get() = if (cartItems.isNotEmpty()) 5.0 else 0.0

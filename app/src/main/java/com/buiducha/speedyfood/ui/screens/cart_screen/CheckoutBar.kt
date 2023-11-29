@@ -25,6 +25,7 @@ fun CheckoutBar(
     totalPrice: Double,
     subTotal: Double,
     deliveryFee: Double,
+    isCheckoutAvailable: Boolean,
     modifier: Modifier = Modifier,
     onCheckout: () -> Unit
 ) {
@@ -53,7 +54,8 @@ fun CheckoutBar(
         )
         Spacer(modifier = Modifier.height(16.dp))
         CheckoutButton(
-            onCheckout = onCheckout
+            onCheckout = onCheckout,
+            isCheckoutAvailable = isCheckoutAvailable
         )
     }
 }
@@ -85,6 +87,7 @@ fun BillingItem(
 
 @Composable
 fun CheckoutButton(
+    isCheckoutAvailable: Boolean,
     onCheckout: () -> Unit
 ) {
     Button(
@@ -92,6 +95,7 @@ fun CheckoutButton(
             onCheckout()
         },
         shape = RoundedCornerShape(20),
+        enabled = isCheckoutAvailable,
         modifier = Modifier
             .fillMaxWidth()
     ) {

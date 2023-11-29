@@ -9,7 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.buiducha.speedyfood.ui.theme.Ivory
-import com.buiducha.speedyfood.viewmodel.UserOrderViewModel
+import com.buiducha.speedyfood.viewmodel.food_order.UserOrderViewModel
 
 @Composable
 fun UserOrderScreen(

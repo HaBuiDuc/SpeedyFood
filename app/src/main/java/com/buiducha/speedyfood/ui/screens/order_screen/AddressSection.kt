@@ -1,5 +1,6 @@
 package com.buiducha.speedyfood.ui.screens.order_screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,8 +36,8 @@ fun AddressSectionPreview() {
 
 @Composable
 fun AddressSection(
-    thoroughfare: String,
     address: String,
+    detailAddress: String,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -59,25 +61,28 @@ fun AddressSection(
             Spacer(modifier = Modifier.width(8.dp))
             Column {
                 Text(
-                    text = thoroughfare,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 18.sp
-                )
-                Text(
                     text = address,
-                    color = Color.DarkGray
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 18.sp,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
                 )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+
+                        }
+                ) {
+                    Text(
+                        text = detailAddress.ifEmpty { stringResource(id = R.string.address_config) },
+                        color = Color.DarkGray
+                    )
+                }
+
             }
-        }
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Text(
-                text = stringResource(id = R.string.address_config)
-            )
-            Text(text = stringResource(id = R.string.edit))
         }
     }
 }

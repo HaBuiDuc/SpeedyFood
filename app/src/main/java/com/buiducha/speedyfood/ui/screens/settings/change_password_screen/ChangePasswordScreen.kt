@@ -1,6 +1,5 @@
 package com.buiducha.speedyfood.ui.screens.settings.change_password_screen
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,7 +43,7 @@ import com.buiducha.speedyfood.data.repository.FireBaseRepository.Companion.OLD_
 import com.buiducha.speedyfood.data.repository.FireBaseRepository.Companion.PASSWORD_CHANGE_FAILURE
 import com.buiducha.speedyfood.ui.screens.shareds.SimpleTopBar
 import com.buiducha.speedyfood.ui.theme.MarianBlue
-import com.buiducha.speedyfood.viewmodel.ChangePasswordViewModel
+import com.buiducha.speedyfood.viewmodel.settings.ChangePasswordViewModel
 
 @Composable
 fun ChangePasswordScreen(

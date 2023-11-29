@@ -22,7 +22,7 @@ import androidx.navigation.NavController
 import com.buiducha.speedyfood.ui.screens.navigation.Screen
 import com.buiducha.speedyfood.ui.screens.shareds.FoodItemHor
 import com.buiducha.speedyfood.ui.screens.shareds.SimpleTopBar
-import com.buiducha.speedyfood.viewmodel.FoodByCategoryViewModel
+import com.buiducha.speedyfood.viewmodel.food_surf.FoodByCategoryViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.CategoryViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.SelectedFoodViewModel
@@ -39,7 +39,7 @@ fun FoodByCategoryScreen(
     foodViewModel: FoodViewModel,
     selectedFoodViewModel: SelectedFoodViewModel,
     categoryViewModel: CategoryViewModel,
-    foodByCategoryViewModel: FoodByCategoryViewModel = viewModel{FoodByCategoryViewModel(foodViewModel, categoryViewModel)},
+    foodByCategoryViewModel: FoodByCategoryViewModel = viewModel{ FoodByCategoryViewModel(foodViewModel, categoryViewModel) },
 ) {
     val foodByCategoryState by foodByCategoryViewModel.foodByCategoryState.collectAsState()
     Scaffold(

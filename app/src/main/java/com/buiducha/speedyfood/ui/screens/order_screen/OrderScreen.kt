@@ -16,7 +16,7 @@ import androidx.navigation.NavController
 import com.buiducha.speedyfood.ui.screens.navigation.Screen
 import com.buiducha.speedyfood.ui.screens.shareds.HorizontalLine
 import com.buiducha.speedyfood.ui.theme.Shade
-import com.buiducha.speedyfood.viewmodel.OrderViewModel
+import com.buiducha.speedyfood.viewmodel.food_order.OrderViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.LocationViewModel
 
 @Preview
@@ -32,7 +32,7 @@ fun OrderScreen(
     orderViewModel: OrderViewModel = viewModel { OrderViewModel(locationViewModel) }
 ) {
     val context = LocalContext.current
-    orderViewModel.getLocation(context)
+//    orderViewModel.getLocation(context)
     val scrollState = rememberScrollState()
     val orderState by orderViewModel.orderState.collectAsState()
     Scaffold(
@@ -65,8 +65,8 @@ fun OrderScreen(
                 .verticalScroll(scrollState)
         ) {
             AddressSection(
-                thoroughfare = orderState.thoroughfare,
-                address = orderState.address
+                address = orderState.address,
+                detailAddress = orderState.detailAddress,
             )
             HorizontalLine(
                 weight = 6.0,

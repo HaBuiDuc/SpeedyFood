@@ -1,5 +1,6 @@
 package com.buiducha.speedyfood.ui.screens.home_screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -13,10 +14,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -28,8 +27,7 @@ import com.buiducha.speedyfood.data.model.FoodData
 import com.buiducha.speedyfood.ui.screens.navigation.Screen
 import com.buiducha.speedyfood.ui.screens.shareds.HorizontalLine
 import com.buiducha.speedyfood.ui.theme.Ivory
-import com.buiducha.speedyfood.utils.getDetailAddress
-import com.buiducha.speedyfood.viewmodel.HomeViewModel
+import com.buiducha.speedyfood.viewmodel.food_surf.HomeViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.CategoryViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.LocationViewModel
@@ -41,6 +39,7 @@ fun HomeScreenPreview() {
 //    HomeScreen()
 }
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun HomeScreen(
     navController: NavController,
@@ -48,7 +47,7 @@ fun HomeScreen(
     locationViewModel: LocationViewModel,
     foodViewModel: FoodViewModel,
     categoryViewModel: CategoryViewModel,
-    homeViewModel: HomeViewModel = viewModel {HomeViewModel(foodViewModel)}
+    homeViewModel: HomeViewModel = viewModel { HomeViewModel(foodViewModel) }
 ) {
     val homeState by homeViewModel.homeState.collectAsState()
     val focusManager = LocalFocusManager.current
@@ -70,7 +69,8 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             HomeTopBar(
-                location = location?.getDetailAddress(context) ?: "null",
+//                location = location?.getDetailAddress(context) ?: "null",
+                location = locationViewModel.geocoding.collectAsState().value,
                 onSearchToggle = {
                     navController.navigate(Screen.SearchScreen.route)
                 },

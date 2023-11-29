@@ -5,7 +5,7 @@ import com.buiducha.speedyfood.data.model.FoodData
 import java.text.DecimalFormat
 
 data class OrderState(
-    val thoroughfare: String = "",
+    val detailAddress: String = "",
     val address: String = "",
     val cartItems: List<CartItemData> = emptyList(),
     var foodItems: List<FoodData> = emptyList(),
@@ -14,13 +14,13 @@ data class OrderState(
     private val df = DecimalFormat("#.##")
 
     val totalPrice: Double
-        get() = df.format(cartItems.sumOf { cart -> cart.price * cart.quantity } + deliveryFee).toDouble()
+        get() = df.format(cartItems.sumOf { cart -> cart.price * cart.quantity } + deliveryFee).replace(",",".").toDouble()
     val subTotal: Double
-        get() = df.format(cartItems.sumOf { cart -> cart.price * cart.quantity }).toDouble()
+        get() = df.format(cartItems.sumOf { cart -> cart.price * cart.quantity }).replace(",", ".").toDouble()
 
     val deliveryFee: Double
         get() = if (cartItems.isNotEmpty()) 5.0 else 0.0
 
     val fullAddress: String
-        get() = "$thoroughfare, $address"
+        get() = address
 }

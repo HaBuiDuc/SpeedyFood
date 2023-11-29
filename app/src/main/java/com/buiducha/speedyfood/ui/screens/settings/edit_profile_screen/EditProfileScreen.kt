@@ -18,7 +18,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -51,7 +50,7 @@ import androidx.navigation.NavController
 import com.buiducha.speedyfood.R
 import com.buiducha.speedyfood.ui.screens.shareds.SimpleTopBar
 import com.buiducha.speedyfood.ui.theme.MarianBlue
-import com.buiducha.speedyfood.viewmodel.EditProfileViewModel
+import com.buiducha.speedyfood.viewmodel.settings.EditProfileViewModel
 
 @Composable
 fun EditProfileScreen(

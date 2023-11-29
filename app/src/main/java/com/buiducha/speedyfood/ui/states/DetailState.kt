@@ -16,12 +16,12 @@ data class DetailState(
             (food?.price!! + addedTopping.sumOf {
                     topping -> toppingList.find { it.id == topping }?.price ?: 0.0
             })
-        ).toDouble()
+        ).replace(",",".").toDouble()
 
     val totalPrice: Double
         get() = df.format(
             (food?.price!! + addedTopping.sumOf {
                     topping -> toppingList.find { it.id == topping }?.price ?: 0.0
             }) * itemQuantity
-        ).toDouble()
+        ).replace(",", ".").toDouble()
 }

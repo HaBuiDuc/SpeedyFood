@@ -6,15 +6,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.buiducha.speedyfood.ui.screens.navigation.Screen
-import com.buiducha.speedyfood.viewmodel.SearchViewModel
+import com.buiducha.speedyfood.viewmodel.food_surf.SearchViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.SelectedFoodViewModel
 
@@ -29,7 +26,7 @@ fun SearchScreen(
     navController: NavController,
     foodViewModel: FoodViewModel,
     selectedFoodViewModel: SelectedFoodViewModel,
-    searchViewModel: SearchViewModel = viewModel {SearchViewModel(foodViewModel)}
+    searchViewModel: SearchViewModel = viewModel { SearchViewModel(foodViewModel) }
 ) {
     val searchState by searchViewModel.searchState.collectAsState()
 

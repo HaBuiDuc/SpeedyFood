@@ -59,7 +59,7 @@ import com.buiducha.speedyfood.ui.theme.DarkGreen
 import com.buiducha.speedyfood.ui.theme.TextBoldStyle
 import com.buiducha.speedyfood.ui.theme.TextSemiBoldStyle
 import com.buiducha.speedyfood.utils.startMainActivity
-import com.buiducha.speedyfood.viewmodel.LoginViewModel
+import com.buiducha.speedyfood.viewmodel.authentication.LoginViewModel
 import kotlinx.coroutines.launch
 
 @Preview

@@ -58,7 +58,7 @@ import com.buiducha.speedyfood.ui.theme.AuthenticTextFieldColor
 import com.buiducha.speedyfood.ui.theme.DarkGreen
 import com.buiducha.speedyfood.ui.theme.TextBoldStyle
 import com.buiducha.speedyfood.ui.theme.TextSemiBoldStyle
-import com.buiducha.speedyfood.viewmodel.RegisterViewModel
+import com.buiducha.speedyfood.viewmodel.authentication.RegisterViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

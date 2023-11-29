@@ -64,19 +64,20 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.1.2")
 
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    testImplementation ("org.hamcrest:hamcrest-all:1.3")
+
     implementation ("androidx.compose.material:material-icons-extended:1.5.4")
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
-
-
 
     // Bottom navigation bar
     implementation ("androidx.navigation:navigation-compose:2.7.5")
@@ -84,7 +85,7 @@ dependencies {
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-auth-ktx:22.2.0")
+    implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
     implementation ("com.firebaseui:firebase-ui-storage:7.2.0")
     implementation("io.coil-kt:coil-compose:1.3.2")
     implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
@@ -101,6 +102,12 @@ dependencies {
 
     // Location
     implementation ("com.google.android.gms:play-services-location:21.0.1")
-    implementation ("com.google.android.libraries.places:places:3.2.0")
+    implementation ("com.google.android.libraries.places:places:3.3.0")
+
+    // retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
 
 }

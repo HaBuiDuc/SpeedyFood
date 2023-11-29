@@ -47,7 +47,7 @@ import androidx.navigation.NavHostController
 import com.buiducha.speedyfood.R
 import com.buiducha.speedyfood.ui.theme.Gold
 import com.buiducha.speedyfood.utils.advancedShadow
-import com.buiducha.speedyfood.viewmodel.DetailViewModel
+import com.buiducha.speedyfood.viewmodel.food_surf.DetailViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.SelectedFoodViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage

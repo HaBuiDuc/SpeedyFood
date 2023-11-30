@@ -56,7 +56,6 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.buiducha.speedyfood.R
 import com.buiducha.speedyfood.ui.navigation.Screen
 import com.buiducha.speedyfood.ui.theme.AuthenticTextFieldColor
-import com.buiducha.speedyfood.ui.theme.DarkGreen
 import com.buiducha.speedyfood.ui.theme.PrimaryColor
 import com.buiducha.speedyfood.ui.theme.TextBoldStyle
 import com.buiducha.speedyfood.ui.theme.TextSemiBoldStyle

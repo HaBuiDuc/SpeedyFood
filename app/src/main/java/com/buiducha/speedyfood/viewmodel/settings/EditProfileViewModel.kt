@@ -1,7 +1,6 @@
 package com.buiducha.speedyfood.viewmodel.settings
 
 import androidx.lifecycle.ViewModel
-import com.buiducha.speedyfood.data.model.UserData
 import com.buiducha.speedyfood.data.repository.FireBaseRepository
 import com.buiducha.speedyfood.ui.states.EditProfileState
 import kotlinx.coroutines.flow.MutableStateFlow

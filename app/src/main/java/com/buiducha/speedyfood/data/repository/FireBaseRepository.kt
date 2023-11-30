@@ -6,6 +6,7 @@ import android.util.Log
 import com.buiducha.speedyfood.data.model.FoodData
 import com.buiducha.speedyfood.data.model.OptionalItemData
 import com.buiducha.speedyfood.data.model.OrderData
+import com.buiducha.speedyfood.data.model.OrderFeedback
 import com.buiducha.speedyfood.data.model.UserData
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -23,9 +24,44 @@ class FireBaseRepository private constructor(context: Context) {
     private val toppingsRef = database.getReference("toppings")
     private val usersRef = database.getReference("users")
     private val orderRef = database.getReference("orders")
+    private val feedbackRef = database.getReference("feedbacks")
     private var auth: FirebaseAuth = Firebase.auth
 
     fun getCurrentUser() = auth.currentUser
+
+    fun getFeedbacks(
+        onGetFeedbackSuccess: (OrderFeedback) -> Unit
+    ) {
+        feedbackRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach { shot ->
+                    val data = shot.getValue(OrderFeedback::class.java)
+                    data?.let(onGetFeedbackSuccess)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        })
+    }
+
+    fun addFeedback(
+        feedback: OrderFeedback,
+        onAddSuccess: () -> Unit,
+        onAddFailure: () -> Unit
+    ) {
+        feedbackRef.push().setValue(feedback)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    onAddSuccess()
+                    Log.d(TAG, "addFeedback: successfully")
+                }
+            }
+            .addOnFailureListener {
+                onAddFailure()
+            }
+    }
 
     fun getOrder(
         userId: String,
@@ -184,7 +220,6 @@ class FireBaseRepository private constructor(context: Context) {
         auth.currentUser?.reauthenticate(credential)
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // User has been reauthenticated successfully
                     // Call updatePassword() method to update the password
                     updatePassword(
                         newPassword = newPassword,
@@ -261,10 +296,7 @@ class FireBaseRepository private constructor(context: Context) {
                 val loginToken = tokenResult.token
                 loginToken?.let {
                     Log.d(TAG, "autoLogin: $it")
-
                 }
-            } else {
-
             }
         }
     }
@@ -314,7 +346,6 @@ class FireBaseRepository private constructor(context: Context) {
 
             override fun onCancelled(error: DatabaseError) {
             }
-
         })
     }
 
@@ -356,7 +387,7 @@ class FireBaseRepository private constructor(context: Context) {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e(TAG, "onCancelled: failure to get data", )
+                Log.e(TAG, "onCancelled: failure to get data")
             }
 
         })
@@ -374,8 +405,6 @@ class FireBaseRepository private constructor(context: Context) {
         fun get(): FireBaseRepository {
             return INSTANCE ?: throw  IllegalStateException("repo must be init")
         }
-
-
 
         const val OLD_PASSWORD_INVALID = "old_password_invalid"
         const val PASSWORD_CHANGE_FAILURE = "password_change_failure"

@@ -31,8 +31,6 @@ fun OrderScreen(
     locationViewModel: LocationViewModel,
     orderViewModel: OrderViewModel = viewModel { OrderViewModel(locationViewModel) }
 ) {
-    val context = LocalContext.current
-//    orderViewModel.getLocation(context)
     val scrollState = rememberScrollState()
     val orderState by orderViewModel.orderState.collectAsState()
     Scaffold(

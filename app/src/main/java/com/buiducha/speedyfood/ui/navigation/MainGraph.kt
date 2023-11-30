@@ -5,7 +5,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.buiducha.speedyfood.ui.screens.auth_screens.forgot_password_screen.ForgotPasswordScreen
 import com.buiducha.speedyfood.ui.screens.cart_screen.CartScreen
 import com.buiducha.speedyfood.ui.screens.detail_screen.DetailScreen
 import com.buiducha.speedyfood.ui.screens.food_by_category.FoodByCategoryScreen
@@ -19,8 +18,8 @@ import com.buiducha.speedyfood.ui.screens.settings.settings_screen.SettingsScree
 import com.buiducha.speedyfood.ui.screens.user_order_screen.UserOrderScreen
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.CategoryViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
-import com.buiducha.speedyfood.viewmodel.shared_viewmodel.SelectedFoodViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.LocationViewModel
+import com.buiducha.speedyfood.viewmodel.shared_viewmodel.SelectedFoodViewModel
 
 @Composable
 fun MainGraph(

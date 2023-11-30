@@ -8,10 +8,6 @@ import com.buiducha.speedyfood.data.repository.FireBaseRepository
 class LoginViewModel : ViewModel() {
     private val fireBaseRepository = FireBaseRepository.get()
 
-    init {
-
-    }
-
     fun authStateCheck(
         onUserExists: () -> Unit,
         onUserNotExists: () -> Unit

@@ -12,10 +12,6 @@ class SearchViewModel(private val foodViewModel: FoodViewModel) : ViewModel() {
     private val _searchState = MutableStateFlow(SearchState())
     val searchState: StateFlow<SearchState> = _searchState.asStateFlow()
 
-    init {
-
-    }
-
     fun setSearchQuery(query: String) {
 
         val resultList = if (query.isEmpty()) {

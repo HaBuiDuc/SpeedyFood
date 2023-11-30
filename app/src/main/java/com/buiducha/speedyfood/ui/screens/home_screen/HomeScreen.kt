@@ -15,9 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,14 +60,9 @@ fun HomeScreen(
         selectedFoodViewModel.foodUpdate(foodData)
     }
 
-    val location by locationViewModel.currentLocation.collectAsState()
-    val scope = rememberCoroutineScope()
-    val context = LocalContext.current
-
     Scaffold(
         topBar = {
             HomeTopBar(
-//                location = location?.getDetailAddress(context) ?: "null",
                 location = locationViewModel.geocoding.collectAsState().value,
                 onSearchToggle = {
                     navController.navigate(Screen.SearchScreen.route)

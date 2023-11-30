@@ -49,7 +49,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.buiducha.speedyfood.R
 import com.buiducha.speedyfood.ui.screens.shareds.SimpleTopBar
-import com.buiducha.speedyfood.ui.theme.MarianBlue
 import com.buiducha.speedyfood.ui.theme.PrimaryColor
 import com.buiducha.speedyfood.viewmodel.settings.EditProfileViewModel
 
@@ -69,9 +68,7 @@ fun EditProfileScreen(
     else
         Icons.Filled.KeyboardArrowDown
 
-    val scope = rememberCoroutineScope()
     val snackBarHostState = remember { SnackbarHostState() }
-    val context = LocalContext.current
     var dialogVisible by remember {
         mutableStateOf(false)
     }

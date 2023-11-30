@@ -1,11 +1,9 @@
 package com.buiducha.speedyfood.viewmodel.food_surf
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.buiducha.speedyfood.data.repository.FireBaseRepository
 import com.buiducha.speedyfood.ui.states.HomeState
-import com.buiducha.speedyfood.viewmodel.shared_viewmodel.CategoryViewModel
 import com.buiducha.speedyfood.viewmodel.shared_viewmodel.FoodViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

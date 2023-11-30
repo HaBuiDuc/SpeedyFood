@@ -26,7 +26,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -42,7 +41,6 @@ import com.buiducha.speedyfood.R
 import com.buiducha.speedyfood.data.repository.FireBaseRepository.Companion.OLD_PASSWORD_INVALID
 import com.buiducha.speedyfood.data.repository.FireBaseRepository.Companion.PASSWORD_CHANGE_FAILURE
 import com.buiducha.speedyfood.ui.screens.shareds.SimpleTopBar
-import com.buiducha.speedyfood.ui.theme.MarianBlue
 import com.buiducha.speedyfood.ui.theme.PrimaryColor
 import com.buiducha.speedyfood.viewmodel.settings.ChangePasswordViewModel
 
@@ -56,7 +54,6 @@ fun ChangePasswordScreen(
         mutableStateOf(false)
     }
     val snackBarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
     Scaffold(
         topBar = {
             SimpleTopBar(

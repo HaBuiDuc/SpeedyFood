@@ -34,12 +34,6 @@ class OrderViewModel(
         )
     }
 
-    fun setDetailAddress(address: String) {
-        _orderState.value = _orderState.value.copy(
-            detailAddress = address
-        )
-    }
-
     private fun getLocation() {
         viewModelScope.launch {
             locationViewModel.geocoding.collect {location ->

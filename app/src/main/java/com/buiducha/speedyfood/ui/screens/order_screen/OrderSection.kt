@@ -25,10 +25,8 @@ import com.buiducha.speedyfood.R
 import com.buiducha.speedyfood.data.model.CartItemData
 import com.buiducha.speedyfood.data.model.FoodData
 import com.buiducha.speedyfood.ui.screens.shareds.HorizontalLine
-import com.buiducha.speedyfood.ui.theme.DarkGreen
 import com.buiducha.speedyfood.ui.theme.LightGray
 import com.buiducha.speedyfood.ui.theme.Orange
-import com.buiducha.speedyfood.ui.theme.Shade
 
 @Preview
 @Composable

@@ -1,11 +1,8 @@
 package com.buiducha.speedyfood.viewmodel.authentication
 
-import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.buiducha.speedyfood.data.repository.FireBaseRepository
-import com.buiducha.speedyfood.utils.startMainActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

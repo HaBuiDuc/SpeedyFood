@@ -14,7 +14,6 @@ class SelectedFoodViewModel : ViewModel(){
     private val _foodData = MutableStateFlow<FoodData?>(null)
     private val _toppingsData = MutableStateFlow<MutableList<OptionalItemData>>(mutableListOf())
     val foodData: StateFlow<FoodData?> get() = _foodData
-    val toppingData: StateFlow<List<OptionalItemData>> get() = _toppingsData
 
     init {
         getToppings()

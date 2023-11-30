@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,7 +30,7 @@ import com.buiducha.speedyfood.ui.theme.TextNormalStyle
 @Preview
 @Composable
 private fun FoodTypesMenuPreview() {
-    FoodTypesMenu() {}
+    FoodTypesMenu {}
 }
 
 @Composable
@@ -67,7 +66,6 @@ fun FoodMenuItem(
 ) {
     val boxSize = if (isActive) 64.dp else 60.dp
     val bgColor = if (isActive) Orange else LightGray
-    val context = LocalContext.current
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

@@ -26,29 +26,6 @@ import com.buiducha.speedyfood.data.model.OptionalItemData
 import com.buiducha.speedyfood.ui.theme.TextNormalStyle
 import com.buiducha.speedyfood.ui.theme.TextSemiBoldStyle
 
-//val optionalList = listOf(
-//    OptionalItemData(
-//        name = "Trung chien",
-//        price = 5000f.toDouble()
-//    ),
-//    OptionalItemData(
-//        name = "Canh them",
-//        price = 3000f.toDouble()
-//    ),
-//    OptionalItemData(
-//        name = "Thit them",
-//        price = 15000f.toDouble()
-//    ),
-//    OptionalItemData(
-//        name = "Nuoc dung",
-//        price = 6000f.toDouble()
-//    ),
-//    OptionalItemData(
-//        name = "Rau",
-//        price = 4000f.toDouble()
-//    )
-//)
-
 @Preview
 @Composable
 fun OptionalItemsPreview() {

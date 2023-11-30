@@ -55,11 +55,14 @@ import com.buiducha.speedyfood.ui.theme.VeryLightGray
 @Composable
 fun OrderItem(
     orderItem: OrderData,
+    onItemFeedback: (String) -> Unit,
+    isReceivedFeedback: Boolean,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
-            .background(Color.White)
+            .padding(4.dp)
+            .background(LightGray)
             .padding(16.dp)
     ) {
         Row(
@@ -103,13 +106,19 @@ fun OrderItem(
                 )
             }
         }
-        ExpandSection(orderItem = orderItem)
+        ExpandSection(
+            orderItem = orderItem,
+            onItemFeedback = onItemFeedback,
+            isReceivedFeedback = isReceivedFeedback
+        )
     }
 }
 
 @Composable
 private fun ExpandSection(
-    orderItem: OrderData
+    orderItem: OrderData,
+    isReceivedFeedback: Boolean,
+    onItemFeedback: (String) -> Unit
 ) {
     var isExpand by remember {
         mutableStateOf(false)
@@ -149,7 +158,12 @@ private fun ExpandSection(
             )
             if (orderItem.orderStatus) {
                 Spacer(modifier = Modifier.height(8.dp))
-                ContactSection()
+                ContactSection(
+                    onItemFeedback = {
+                        onItemFeedback(orderItem.orderId)
+                    },
+                    isReceivedFeedback = isReceivedFeedback
+                )
             }
         }
     }
@@ -238,11 +252,14 @@ fun DeliveryAddress(
 @Preview
 @Composable
 fun ContactSectionPreview() {
-    ContactSection()
+    ContactSection(false) {}
 }
 
 @Composable
-fun ContactSection() {
+fun ContactSection(
+    isReceivedFeedback: Boolean,
+    onItemFeedback: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -266,11 +283,13 @@ fun ContactSection() {
         Spacer(modifier = Modifier.width(8.dp))
         Button(
             onClick = {
+                onItemFeedback()
             },
             shape = RoundedCornerShape(8),
             colors = ButtonDefaults.buttonColors(
                 containerColor = PrimaryColor
             ),
+            enabled = !isReceivedFeedback,
             modifier = Modifier
                 .fillMaxSize()
         ) {

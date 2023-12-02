@@ -28,7 +28,10 @@ class LocationViewModel : ViewModel() {
                 _currentLocation.value = location
                 val latLng = "${location.latitude},${location.longitude}"
                 viewModelScope.launch {
-                    _geocoding.value = GeocodingRepository().getGeocoding(latLng).results[0].formattedAddress
+                    val geoResult = GeocodingRepository().getGeocoding(latLng).results
+                    if (geoResult.isNotEmpty()) {
+                        _geocoding.value = geoResult[0].formattedAddress
+                    }
                 }
                 Log.d(TAG, latLng)
                 Log.d(TAG, geocoding.value)

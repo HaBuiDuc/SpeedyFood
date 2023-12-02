@@ -8,19 +8,6 @@ import com.buiducha.speedyfood.data.repository.FireBaseRepository
 class LoginViewModel : ViewModel() {
     private val fireBaseRepository = FireBaseRepository.get()
 
-    fun authStateCheck(
-        onUserExists: () -> Unit,
-        onUserNotExists: () -> Unit
-    ) {
-        if (fireBaseRepository.getCurrentUser() != null) {
-            Log.d(TAG, "Auto login without input: ")
-            onLoginSuccess(
-                onUserExists = onUserExists,
-                onUserNotExists = onUserNotExists
-            )
-        }
-    }
-
     fun userLogin(
         activity: Activity,
         email: String,

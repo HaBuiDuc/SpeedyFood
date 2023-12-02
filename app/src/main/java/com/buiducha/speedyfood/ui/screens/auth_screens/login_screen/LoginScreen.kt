@@ -76,14 +76,6 @@ fun LoginScreen(
     loginViewModel: LoginViewModel = viewModel()
 ) {
     val context = LocalContext.current
-    loginViewModel.authStateCheck(
-        onUserExists = {
-            startMainActivity(context)
-        },
-        onUserNotExists = {
-            navController.navigate(Screen.AddInfoScreen.route)
-        }
-    )
     var emailOrPhone by remember {
         mutableStateOf("")
     }

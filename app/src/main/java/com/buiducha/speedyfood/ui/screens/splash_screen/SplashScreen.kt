@@ -51,6 +51,7 @@ fun SplashScreen(
                         startMainActivity(context = context)
                     },
                     onUserNotExists = {
+                        navController.popBackStack()
                         navController.navigate(Screen.AddInfoScreen.route)
                     }
                 )

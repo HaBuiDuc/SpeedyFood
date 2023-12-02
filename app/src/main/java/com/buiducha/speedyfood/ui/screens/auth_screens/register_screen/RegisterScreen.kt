@@ -203,6 +203,7 @@ fun RegisterScreen(
                                 scope.launch {
                                     snackBarHostState.showSnackbar("Create account successfully")
                                     delay(2000)
+                                    navController.popBackStack()
                                     navController.navigate(Screen.LoginScreen.route)
                                 }
                             },
